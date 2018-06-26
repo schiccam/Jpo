@@ -18,6 +18,7 @@ import junit.framework.Test;
 
 import java.io.Console;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
@@ -44,35 +45,58 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /* TEST InscritDAO
+        Inscrit i = new Inscrit();
+
+        InscritDAO ide = new InscritDAO(this);
+        ide.Ajouter(i);
+        ide.Ajouter(i);
+        ide.Ajouter(i);
+        ide.Ajouter(i);
+
+
         MaBaseSQLite maBaseSQLite = new MaBaseSQLite(this);
         db = maBaseSQLite.getReadableDatabase();
 
-        Afficher_commune();
-    }
+        String rawQuery = "INSERT INTO Inscrit(insNom, insPrenom, insTel, insMail) VALUES ('Chiccam','Sylvain','0658219313','schiccam@hotmail.fr')";
+        db.execSQL(rawQuery);
 
-    public long getProfilesCount() {
-        SQLiteDatabase database = this.openOrCreateDatabase("db_Commune", MODE_PRIVATE, null);
-        long count = DatabaseUtils.queryNumEntries(database, "commune");
-        database.close();
-        return count;
-    }
+        Inscrit iu = new Inscrit();
+        iu.setId(95);
+        iu.setNom("Chiccamtest");
+        iu.setPrenom("Sylvaintest");
+        iu.setTel("9999999999");
+        iu.setMail("TEst");
 
-    public void Afficher_commune() {
+        ide.Modifier(iu);
 
-        Cursor cr = db.rawQuery("SELECT * FROM commune LIMIT 10", null);
+        Cursor cr = db.rawQuery("SELECT * FROM Inscrit",null);
+
         if (cr.moveToFirst()) {
             do {
-                String nom = cr.getString(cr.getColumnIndex("Nom_commune"));
-                String cp = cr.getString(cr.getColumnIndex("Code_postal"));
+                int id = cr.getInt(cr.getColumnIndex("ins_id"));
+                String nom = cr.getString(cr.getColumnIndex("insNom"));
+                String prenom = cr.getString(cr.getColumnIndex("insPrenom"));
+                String tel = cr.getString(cr.getColumnIndex("insTel"));
+                String mail = cr.getString(cr.getColumnIndex("insMail"));
 
-                String raw = nom + " - " + cp;
+                String raw = id + " " + nom + " " + prenom + " " + tel + " " + mail;
+
+                Log.e("test BDD :",raw);
 
             }
             while (cr.moveToNext());
             cr.close();
         }
 
+        Inscrit testfd = ide.getInscrit(95);
+
+        List<Inscrit> list = ide.getAllInscrit();*/
+
+
     }
+
+
 
 
 

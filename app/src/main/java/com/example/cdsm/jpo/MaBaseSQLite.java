@@ -18,7 +18,17 @@ public class MaBaseSQLite extends SQLiteOpenHelper {
         +"insNom TEXT,"
         +"insPrenom TEXT,"
         +"insTel TEXT,"
-        +"insMail TEXT);";
+        +"insMail TEXT,"
+        +"insSexe TEXT,"
+        +"insDateNaiss TEXT,"
+        +"insLieuNaiss TEXT,"
+        +"insAdresse TEXT,"
+        +"insCP TEXT,"
+        +"insVille TEXT,"
+        +"insScolarite1 TEXT,"
+        +"insScolarite2 TEXT,"
+        +"insFormation1 TEXT,"
+        +"insFormation2 TEXT);";
 
 
     public MaBaseSQLite(Context context){
@@ -29,7 +39,6 @@ public class MaBaseSQLite extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(createInscrit);
-        db.execSQL(commune());
     }
 
     @Override
@@ -38,14 +47,4 @@ public class MaBaseSQLite extends SQLiteOpenHelper {
         db.execSQL(createInscrit);
     }
 
-    private String commune(){
-
-        Scanner scan = new Scanner (context.getResources().openRawResource(R.raw.commune));
-        String query = "";
-        while(scan.hasNextLine())
-        {
-            query += scan.nextLine() + "\n";
-        }
-        return query;
-    }
 }
