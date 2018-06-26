@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS commune(
-   Nom_commune VARCHAR(38) NOT NULL
+   Nom_commune TEXT NOT NULL
   ,Code_postal INTEGER  NOT NULL
 );
 INSERT INTO commune(Nom_commune,Code_postal) VALUES ('FRESNEVILLE',80140);

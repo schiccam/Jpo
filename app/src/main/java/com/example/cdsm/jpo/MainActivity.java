@@ -11,9 +11,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import junit.framework.Test;
 
+import java.io.Console;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,95 +44,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Création de la base de données à l'ouverture de l'application
-        db = this.openOrCreateDatabase("db_JPO", MODE_PRIVATE, null);
+        MaBaseSQLite maBaseSQLite = new MaBaseSQLite(this);
+        db = maBaseSQLite.getReadableDatabase();
 
-        //Création de la table  Formation
-        db.beginTransaction();
-        try {
-            //Table Formation
-            String CreateTable =
-                    "CREATE TABLE IF NOT EXISTS Formation("
-                            + "  FormId INTEGER PRIMARY KEY AUTOINCREMENT,"
-                            + "  FormNom TEXT,"
-                            + "  FormPdf TEXT);";
-            db.execSQL(CreateTable);
-            db.setTransactionSuccessful();
-
-
-        } catch (SQLException e) {
-            System.out.print(e);
-        } finally {
-            db.endTransaction();
-        }
-
-        //Création de la table Fiche
-        db.beginTransaction();
-        try {
-            //Table Fiche
-//TODO Modifier la table en fonction des infos pour les check box (Emploi , Déscolarisé , Autre)
-            String CreateTable =
-                    "CREATE TABLE IF NOT EXISTS Fiche("
-                            + "  FId INTEGER PRIMARY KEY AUTOINCREMENT,"
-                            + "  FNom TEXT,"
-                            + "  FPrenom TEXT,"
-                            + "  FSexe TEXT,"
-                            + "  FDateNaiss TEXT,"
-                            + "  FLieuNaiss TEXT,"
-                            + "  FNationalite TEXT,"
-                            + "  FAdresse TEXT,"
-                            + "  FCP INTEGER,"
-                            + "  FVille TEXT,"
-                            + "  FTelFixe INTEGER,"
-                            + "  FTelPort INTEGER,"
-                            + "  FMail TEXT,"
-                            + "  FScolarite1 TEXT,"
-                            + "  FScolarite2 TEXT,"
-                            + "  FFormation1 TEXT,"
-                            + "  FFormation2 TEXT,"
-                            + "  FCommentaires TEXT,"
-                            + "  FOrigineDemande TEXT);";
-            db.execSQL(CreateTable);
-            db.setTransactionSuccessful();
-        } catch (SQLException e) {
-            System.out.print(e);
-        } finally {
-            db.endTransaction();
-        }
-
-        //Importation des communes
-
-        // Test si la table Commune existe
-        try
-        {
-            long count = getProfilesCount();
-            Testdb = true;
-        }
-        catch (Exception e)
-        {
-            Log.e("Erreur :",""+e);
-            Testdb = false;
-        }
-
-        // Création ou non de la table en fonction du test
-        if(!Testdb)
-        {
-            Log.i("Communes","Début importation");
-            db = this.openOrCreateDatabase("db_Commune", MODE_PRIVATE, null);
-            Scanner scan = new Scanner (getResources().openRawResource(R.raw.commune));
-            String query = "";
-            while(scan.hasNextLine())
-            {
-                query += scan.nextLine() + "\n";
-                if(query.trim().endsWith(";"))
-                {
-                    db.execSQL(query);
-                    query = "";
-                }
-            }
-            Log.i("Communes","Fin importation");
-        }
-
+        Afficher_commune();
     }
 
     public long getProfilesCount() {
@@ -136,6 +55,23 @@ public class MainActivity extends AppCompatActivity {
         long count = DatabaseUtils.queryNumEntries(database, "commune");
         database.close();
         return count;
+    }
+
+    public void Afficher_commune() {
+
+        Cursor cr = db.rawQuery("SELECT * FROM commune LIMIT 10", null);
+        if (cr.moveToFirst()) {
+            do {
+                String nom = cr.getString(cr.getColumnIndex("Nom_commune"));
+                String cp = cr.getString(cr.getColumnIndex("Code_postal"));
+
+                String raw = nom + " - " + cp;
+
+            }
+            while (cr.moveToNext());
+            cr.close();
+        }
+
     }
 
 
