@@ -42,10 +42,12 @@ public class MaBaseSQLite extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(createInscrit);
         db.execSQL(createAdmin);
-        String mdp = Hash.md5("azerty");
-        String mdp2 = Hash.md5("azertyuiop");
+        String mdp = "ab4f63f9ac65152575886860dde480a1";
+        String mdp2 = "7682fe272099ea26efe39c890b33675b";
+        String mdp3 = "63a9f0ea7bb98050796b649e85481845";
         db.execSQL("INSERT INTO Admin VALUES (1,'admin','"+mdp+"')");
         db.execSQL("INSERT INTO Admin VALUES (2,'admin2','"+mdp2+"')");
+        db.execSQL("INSERT INTO Admin VALUES (3,'root','"+mdp3+"')");
 
 
     }

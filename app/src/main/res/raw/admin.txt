@@ -1,0 +1,4 @@
+connexion admin
+admin azerty
+admin2 azertyuiop
+root root

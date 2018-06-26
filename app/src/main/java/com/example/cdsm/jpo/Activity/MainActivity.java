@@ -147,20 +147,20 @@ public class MainActivity extends AppCompatActivity {
                         }
                         else
                         {
-                            Toast.makeText(MainActivity.this,"Erreur",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this,"Login et/ou Mot de passe incorrect !",Toast.LENGTH_SHORT).show();
                         }
 
                         cr.close();
                     }
                     else
                     {
-                        Toast.makeText(MainActivity.this,"Erreur",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this,"Login et/ou Mot de passe incorrect !",Toast.LENGTH_SHORT).show();
                     }
 
                 }
                 else
                 {
-                    Toast.makeText(MainActivity.this,"Erreur",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this,"Veuillez remplir tous les champs !",Toast.LENGTH_SHORT).show();
                 }
             }
         });
