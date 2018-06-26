@@ -1,31 +1,21 @@
-package com.example.cdsm.jpo;
+package com.example.cdsm.jpo.Activity;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import junit.framework.Test;
-
-import java.io.Console;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import com.example.cdsm.jpo.Classe.Hash;
+import com.example.cdsm.jpo.Classe.MaBaseSQLite;
+import com.example.cdsm.jpo.R;
 
 public class MainActivity extends AppCompatActivity {
 

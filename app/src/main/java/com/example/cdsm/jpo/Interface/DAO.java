@@ -1,4 +1,6 @@
-package com.example.cdsm.jpo;
+package com.example.cdsm.jpo.Interface;
+
+import com.example.cdsm.jpo.Classe.Inscrit;
 
 public interface DAO {
     void Ajouter(Inscrit inscrit);

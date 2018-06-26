@@ -1,8 +1,10 @@
-package com.example.cdsm.jpo;
+package com.example.cdsm.jpo.Classe;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.example.cdsm.jpo.Interface.DAO;
 
 import java.util.ArrayList;
 import java.util.List;

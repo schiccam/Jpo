@@ -1,11 +1,8 @@
-package com.example.cdsm.jpo;
+package com.example.cdsm.jpo.Classe;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-
-import java.util.Scanner;
 
 public class MaBaseSQLite extends SQLiteOpenHelper {
 

@@ -1,4 +1,4 @@
-package com.example.cdsm.jpo;
+package com.example.cdsm.jpo.Classe;
 
 public class Inscrit {
 

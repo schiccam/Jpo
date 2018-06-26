@@ -1,7 +1,9 @@
-package com.example.cdsm.jpo;
+package com.example.cdsm.jpo.Activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.cdsm.jpo.R;
 
 public class Main2Activity extends AppCompatActivity {
 
