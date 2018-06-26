@@ -17,6 +17,8 @@ import android.widget.ListView;
 import junit.framework.Test;
 
 import java.io.Console;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -94,10 +96,32 @@ public class MainActivity extends AppCompatActivity {
         List<Inscrit> list = ide.getAllInscrit();*/
 
 
+
+
+        /*TEST Table Admin Locale
+        MaBaseSQLite maBaseSQLite = new MaBaseSQLite(this);
+        db = maBaseSQLite.getReadableDatabase();
+
+        Cursor cr = db.rawQuery("SELECT * FROM Admin",null);
+
+        if (cr.moveToFirst()) {
+            do {
+                int id = cr.getInt(cr.getColumnIndex("ad_id"));
+                String login = cr.getString(cr.getColumnIndex("adLogin"));
+                String mdp = cr.getString(cr.getColumnIndex("adMdp"));
+
+                String raw = id + " " + login + " " + mdp;
+
+                Log.e("test MDP :", raw);
+
+            }
+            while (cr.moveToNext());
+            cr.close();
+        }*/
+
     }
 
+    public void admin_Click(View view) {
 
-
-
-
+    }
 }

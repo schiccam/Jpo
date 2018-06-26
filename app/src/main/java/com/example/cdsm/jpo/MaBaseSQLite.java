@@ -30,6 +30,11 @@ public class MaBaseSQLite extends SQLiteOpenHelper {
         +"insFormation1 TEXT,"
         +"insFormation2 TEXT);";
 
+    private String createAdmin = "CREATE TABLE IF NOT EXISTS Admin(" +
+            "ad_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "adLogin TEXT," +
+            "adMdp TEXT);";
+
 
     public MaBaseSQLite(Context context){
         super(context,DB_NAME,null,DB_VERSION);
@@ -39,6 +44,13 @@ public class MaBaseSQLite extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(createInscrit);
+        db.execSQL(createAdmin);
+        String mdp = Hash.md5("azerty");
+        String mdp2 = Hash.md5("azertyuiop");
+        db.execSQL("INSERT INTO Admin VALUES (1,'admin','"+mdp+"')");
+        db.execSQL("INSERT INTO Admin VALUES (2,'admin2','"+mdp2+"')");
+
+
     }
 
     @Override
