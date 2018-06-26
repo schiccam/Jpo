@@ -37,6 +37,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
         android:onClick="admin_Click"
         android:src="@drawable/adminicon"
         android:adjustViewBounds="true"
