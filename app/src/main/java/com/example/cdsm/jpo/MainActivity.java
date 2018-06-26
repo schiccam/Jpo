@@ -6,13 +6,17 @@ import android.database.DatabaseUtils;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import junit.framework.Test;
 
@@ -122,6 +126,58 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void admin_Click(View view) {
+
+        //Custom Dialog pour formulaire de connexion Admin
+        AlertDialog.Builder myBuilder = new AlertDialog.Builder(this);
+        View myView = getLayoutInflater().inflate(R.layout.dialog_login, null);
+        final EditText etLogin = myView.findViewById(R.id.etLogin);
+        final EditText etMdp = myView.findViewById(R.id.etMDP);
+        Button valider = myView.findViewById(R.id.btnValider);
+
+        valider.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!etLogin.getText().toString().isEmpty() && !etMdp.getText().toString().isEmpty()){
+
+                    String login = etLogin.getText().toString();
+                    String mdp = etMdp.getText().toString();
+
+                    MaBaseSQLite maBaseSQLite = new MaBaseSQLite(MainActivity.this);
+                    db = maBaseSQLite.getReadableDatabase();
+
+                    Cursor cr = db.rawQuery("SELECT * FROM Admin WHERE adlogin = '"+login+"' ",null);
+                    if (cr.moveToFirst()) {
+
+                        String password = cr.getString(cr.getColumnIndex("adMdp"));
+                        String mdpHash = Hash.md5(mdp);
+
+                        if(mdpHash.equals(password))
+                        {
+                            Toast.makeText(MainActivity.this,"OK!!!",Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            Toast.makeText(MainActivity.this,"Erreur",Toast.LENGTH_SHORT).show();
+                        }
+
+                        cr.close();
+                    }
+                    else
+                    {
+                        Toast.makeText(MainActivity.this,"Erreur",Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+                else
+                {
+                    Toast.makeText(MainActivity.this,"Erreur",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        myBuilder.setView(myView);
+        AlertDialog dialog = myBuilder.create();
+        dialog.show();
 
     }
 }
