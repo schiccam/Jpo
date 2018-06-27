@@ -1,11 +1,15 @@
 package com.example.cdsm.jpo.Classe;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.cdsm.jpo.Interface.DAO;
 
-public class FormationDAO implements DAO {
+import java.util.ArrayList;
+import java.util.List;
+
+public class FormationDAO implements DAO<Formation> {
 
     private SQLiteDatabase db;
     private MaBaseSQLite maBaseSQLite;
@@ -22,18 +26,102 @@ public class FormationDAO implements DAO {
         db.close();
     }
 
-    @Override
-    public void Ajouter(Inscrit inscrit) {
 
+    @Override
+    public void Ajouter(Formation item) {
+
+        String lib;
+        int nvFormID;
+
+        lib = item.getLib();
+        nvFormID = item.getNvformationid();
+
+        String query = "INSERT INTO Formation(formLib, formNiveau) VALUES ('"+lib+"',"+nvFormID+");";
+
+        opendb();
+
+        db.execSQL(query);
+
+        closedb();
     }
 
     @Override
     public void Supprimer(int id) {
-
     }
 
     @Override
-    public void Modifier(Inscrit inscrit) {
+    public void Modifier(Formation item) {
+    }
 
+    public Formation getFormation(int id){
+
+        Formation formation = new Formation();
+
+        opendb();
+
+        Cursor cr = db.rawQuery("SELECT * FROM Formation WHERE form_id = "+id+";",null);
+        if (cr.moveToFirst()){
+            formation.setId(cr.getInt(cr.getColumnIndex("form_id")));
+            formation.setLib(cr.getString(cr.getColumnIndex("formLib")));
+            formation.setNvformationid(cr.getInt(cr.getColumnIndex("formNiveau")));
+        }
+        cr.close();
+
+        closedb();
+
+        return formation;
+    }
+
+    public List getAllFormation(){
+
+        String lib;
+        int id, nvFormID;
+
+        List<Formation> formations = new ArrayList<Formation>();
+
+        opendb();
+
+        Cursor cr = db.rawQuery("SELECT * FROM Formation;",null);
+        if(cr.moveToFirst()){
+            do {
+                id = cr.getInt(cr.getColumnIndex("form_id"));
+                lib = cr.getString(cr.getColumnIndex("formLib"));
+                nvFormID = cr.getInt(cr.getColumnIndex("formNiveau"));
+
+                Formation formation = new Formation(lib, nvFormID);
+                formation.setId(id);
+                formations.add(formation);
+            }
+            while (cr.moveToNext());
+            cr.close();
+        }
+
+        closedb();
+
+        return formations;
+    }
+
+    public List getAllNiveauFormation(){
+
+        List<NiveauFormation> niveauFormations = new ArrayList<NiveauFormation>();
+
+        opendb();
+
+        Cursor cr = db.rawQuery("SELECT * FROM NiveauFormation;",null);
+        if(cr.moveToFirst()){
+            do {
+                int id = cr.getInt(cr.getColumnIndex("nvform_id"));
+                String lib = cr.getString(cr.getColumnIndex("nvformLib"));
+
+                NiveauFormation niveauFormation = new NiveauFormation(id, lib);
+                niveauFormations.add(niveauFormation);
+            }
+            while (cr.moveToNext());
+            cr.close();
+        }
+
+        closedb();
+
+        return niveauFormations;
     }
 }

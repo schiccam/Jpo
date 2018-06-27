@@ -9,7 +9,7 @@ import com.example.cdsm.jpo.Interface.DAO;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InscritDAO implements DAO {
+public class InscritDAO implements DAO<Inscrit> {
 
     private SQLiteDatabase db;
     private MaBaseSQLite maBaseSQLite;
@@ -27,25 +27,25 @@ public class InscritDAO implements DAO {
     }
 
     @Override
-    public void Ajouter(Inscrit inscrit) {
+    public void Ajouter(Inscrit item) {
 
         String nom, prenom, tel, mail, sexe, datenaiss, lieunaiss, adresse, cp, ville, sco1, sco2;
         int form1, form2;
 
-        nom = inscrit.getNom();
-        prenom = inscrit.getPrenom();
-        tel = inscrit.getTel();
-        mail = inscrit.getMail();
-        sexe = inscrit.getSexe();
-        datenaiss = inscrit.getDateNaiss();
-        lieunaiss = inscrit.getLieuNaiss();
-        adresse = inscrit.getAdresse();
-        cp = inscrit.getCp();
-        ville = inscrit.getVille();
-        sco1 = inscrit.getScolarite1();
-        sco2 = inscrit.getScolarite2();
-        form1 = inscrit.getFormation1();
-        form2 = inscrit.getFormation2();
+        nom = item.getNom();
+        prenom = item.getPrenom();
+        tel = item.getTel();
+        mail = item.getMail();
+        sexe = item.getSexe();
+        datenaiss = item.getDateNaiss();
+        lieunaiss = item.getLieuNaiss();
+        adresse = item.getAdresse();
+        cp = item.getCp();
+        ville = item.getVille();
+        sco1 = item.getScolarite1();
+        sco2 = item.getScolarite2();
+        form1 = item.getFormation1();
+        form2 = item.getFormation2();
 
         String query = "INSERT INTO Inscrit(insNom,insPrenom,insTel,insMail,insSexe,insDateNaiss" +
                 ",insLieuNaiss,insAdresse,insCP,insVille,insScolarite1,insScolarite2,insFormation1,insFormation2)" +
@@ -73,26 +73,26 @@ public class InscritDAO implements DAO {
     }
 
     @Override
-    public void Modifier(Inscrit inscrit) {
+    public void Modifier(Inscrit item) {
 
         String nom, prenom, tel, mail, sexe, datenaiss, lieunaiss, adresse, cp, ville, sco1, sco2;
         int id, form1, form2;
 
-        id = inscrit.getId();
-        nom = inscrit.getNom();
-        prenom = inscrit.getPrenom();
-        tel = inscrit.getTel();
-        mail = inscrit.getMail();
-        sexe = inscrit.getSexe();
-        datenaiss = inscrit.getDateNaiss();
-        lieunaiss = inscrit.getLieuNaiss();
-        adresse = inscrit.getAdresse();
-        cp = inscrit.getCp();
-        ville = inscrit.getVille();
-        sco1 = inscrit.getScolarite1();
-        sco2 = inscrit.getScolarite2();
-        form1 = inscrit.getFormation1();
-        form2 = inscrit.getFormation2();
+        id = item.getId();
+        nom = item.getNom();
+        prenom = item.getPrenom();
+        tel = item.getTel();
+        mail = item.getMail();
+        sexe = item.getSexe();
+        datenaiss = item.getDateNaiss();
+        lieunaiss = item.getLieuNaiss();
+        adresse = item.getAdresse();
+        cp = item.getCp();
+        ville = item.getVille();
+        sco1 = item.getScolarite1();
+        sco2 = item.getScolarite2();
+        form1 = item.getFormation1();
+        form2 = item.getFormation2();
 
         String query = "UPDATE Inscrit SET insNom = '"+nom+"', insPrenom = '"+prenom+"', insTel = '"+tel+"'" +
                 ", insMail = '"+mail+"', insSexe = '"+sexe+"', insDatenaiss = '"+datenaiss+"', insLieuNaiss = '"+lieunaiss+"'" +
