@@ -29,7 +29,8 @@ public class InscritDAO implements DAO {
     @Override
     public void Ajouter(Inscrit inscrit) {
 
-        String nom, prenom, tel, mail, sexe, datenaiss, lieunaiss, adresse, cp, ville, sco1, sco2, form1, form2;
+        String nom, prenom, tel, mail, sexe, datenaiss, lieunaiss, adresse, cp, ville, sco1, sco2;
+        int form1, form2;
 
         nom = inscrit.getNom();
         prenom = inscrit.getPrenom();
@@ -74,8 +75,8 @@ public class InscritDAO implements DAO {
     @Override
     public void Modifier(Inscrit inscrit) {
 
-        String nom, prenom, tel, mail, sexe, datenaiss, lieunaiss, adresse, cp, ville, sco1, sco2, form1, form2;
-        int id;
+        String nom, prenom, tel, mail, sexe, datenaiss, lieunaiss, adresse, cp, ville, sco1, sco2;
+        int id, form1, form2;
 
         id = inscrit.getId();
         nom = inscrit.getNom();
@@ -128,8 +129,8 @@ public class InscritDAO implements DAO {
                 inscrit.setVille(cr.getString(cr.getColumnIndex("insVille")));
                 inscrit.setScolarite1(cr.getString(cr.getColumnIndex("insScolarite1")));
                 inscrit.setScolarite2(cr.getString(cr.getColumnIndex("insScolarite2")));
-                inscrit.setFormation1(cr.getString(cr.getColumnIndex("insFormation1")));
-                inscrit.setFormation2(cr.getString(cr.getColumnIndex("insFormation2")));
+                inscrit.setFormation1(cr.getInt(cr.getColumnIndex("insFormation1")));
+                inscrit.setFormation2(cr.getInt(cr.getColumnIndex("insFormation2")));
             }
             while (cr.moveToNext());
             cr.close();
@@ -142,8 +143,8 @@ public class InscritDAO implements DAO {
 
     public List getAllInscrit(){
 
-        String nom, prenom, tel, mail, sexe, datenaiss, lieunaiss, adresse, cp, ville, sco1, sco2, form1, form2;
-        int id;
+        String nom, prenom, tel, mail, sexe, datenaiss, lieunaiss, adresse, cp, ville, sco1, sco2;
+        int id, form1, form2;
 
         List<Inscrit> Inscrits = new ArrayList<Inscrit>();
 
@@ -165,8 +166,8 @@ public class InscritDAO implements DAO {
                 ville = cr.getString(cr.getColumnIndex("insVille"));
                 sco1 = cr.getString(cr.getColumnIndex("insScolarite1"));
                 sco2 = cr.getString(cr.getColumnIndex("insScolarite2"));
-                form1 = cr.getString(cr.getColumnIndex("insFormation1"));
-                form2 = cr.getString(cr.getColumnIndex("insFormation2"));
+                form1 = cr.getInt(cr.getColumnIndex("insFormation1"));
+                form2 = cr.getInt(cr.getColumnIndex("insFormation2"));
 
                 Inscrit inscrit = new Inscrit(nom,prenom,tel,mail,sexe,datenaiss,lieunaiss,adresse,
                         cp,ville,sco1,sco2,form1,form2);

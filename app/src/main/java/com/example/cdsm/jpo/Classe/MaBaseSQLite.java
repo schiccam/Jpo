@@ -24,13 +24,24 @@ public class MaBaseSQLite extends SQLiteOpenHelper {
         +"insVille TEXT,"
         +"insScolarite1 TEXT,"
         +"insScolarite2 TEXT,"
-        +"insFormation1 TEXT,"
-        +"insFormation2 TEXT);";
+        +"insFormation1 INTEGER,"
+        +"insFormation2 INTEGER,"
+        +"FOREIGN KEY (insFormation1) REFERENCES Formation(form_id));";
+
+    private String createFormation ="CREATE TABLE IF NOT EXISTS Formation(" +
+            "form_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "formLib TEXT," +
+            "formNiveau INTEGER,"+
+            "FOREIGN KEY (formNiveau) REFERENCES Formation(nvform_id));";
 
     private String createAdmin = "CREATE TABLE IF NOT EXISTS Admin(" +
             "ad_id INTEGER PRIMARY KEY AUTOINCREMENT," +
             "adLogin TEXT," +
             "adMdp TEXT);";
+
+    private String createNiveauFormation = "CREATE TABLE IF NOT EXISTS NiveauFormation(" +
+            "nvform_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "nvformLib TEXT);";
 
 
     public MaBaseSQLite(Context context){
@@ -40,8 +51,14 @@ public class MaBaseSQLite extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        //Création de toutes les tables
+        db.execSQL(createNiveauFormation);
+        db.execSQL(createFormation);
         db.execSQL(createInscrit);
         db.execSQL(createAdmin);
+
+
+        //Insertion de données dans la tables admin
         String mdp = "ab4f63f9ac65152575886860dde480a1";
         String mdp2 = "7682fe272099ea26efe39c890b33675b";
         String mdp3 = "63a9f0ea7bb98050796b649e85481845";
@@ -49,13 +66,22 @@ public class MaBaseSQLite extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO Admin VALUES (2,'admin2','"+mdp2+"')");
         db.execSQL("INSERT INTO Admin VALUES (3,'root','"+mdp3+"')");
 
+        //Insertion de données dans la tables formation
+
+
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE Inscrit;");
+        db.execSQL("DROP TABLE Formation;");
+        db.execSQL("DROP TABLE NiveauFormation;");
+        db.execSQL("DROP TABLE Admin;");
         db.execSQL(createInscrit);
+        db.execSQL(createFormation);
+        db.execSQL(createNiveauFormation);
+        db.execSQL(createAdmin);
     }
 
 }

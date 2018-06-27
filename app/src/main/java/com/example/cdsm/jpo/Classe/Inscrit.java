@@ -15,15 +15,15 @@ public class Inscrit {
     private String ville;
     private String scolarite1;
     private String scolarite2;
-    private String formation1;
-    private String formation2;
+    private int formation1;
+    private int formation2;
 
     public Inscrit(){ }
 
 
     public Inscrit(String nom, String prenom, String tel, String mail, String sexe, String dateNaiss,
                    String lieuNaiss, String adresse, String cp, String ville, String scolarite1,
-                   String scolarite2, String formation1, String formation2 ){
+                   String scolarite2, int formation1, int formation2 ){
 
         this.nom = nom;
         this.prenom = prenom;
@@ -140,19 +140,19 @@ public class Inscrit {
         this.scolarite2 = scolarite2;
     }
 
-    public String getFormation1() {
+    public int getFormation1() {
         return formation1;
     }
 
-    public void setFormation1(String formation1) {
+    public void setFormation1(int formation1) {
         this.formation1 = formation1;
     }
 
-    public String getFormation2() {
+    public int getFormation2() {
         return formation2;
     }
 
-    public void setFormation2(String formation2) {
+    public void setFormation2(int formation2) {
         this.formation2 = formation2;
     }
 }

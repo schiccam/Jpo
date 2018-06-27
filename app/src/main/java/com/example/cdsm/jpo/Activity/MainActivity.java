@@ -7,6 +7,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -14,8 +15,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.cdsm.jpo.Classe.Hash;
+import com.example.cdsm.jpo.Classe.Inscrit;
+import com.example.cdsm.jpo.Classe.InscritDAO;
 import com.example.cdsm.jpo.Classe.MaBaseSQLite;
 import com.example.cdsm.jpo.R;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /* TEST InscritDAO
+         //TEST InscritDAO
         Inscrit i = new Inscrit();
 
         InscritDAO ide = new InscritDAO(this);
@@ -87,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
         Inscrit testfd = ide.getInscrit(95);
 
-        List<Inscrit> list = ide.getAllInscrit();*/
+        List<Inscrit> list = ide.getAllInscrit();
 
 
 
