@@ -49,8 +49,8 @@ public class InscritDAO implements DAO<Inscrit> {
 
         String query = "INSERT INTO Inscrit(insNom,insPrenom,insTel,insMail,insSexe,insDateNaiss" +
                 ",insLieuNaiss,insAdresse,insCP,insVille,insScolarite1,insScolarite2,insFormation1,insFormation2)" +
-                "VALUES ("+nom+","+prenom+","+tel+","+mail+","+sexe+","+datenaiss+","+lieunaiss+","+adresse+
-                ","+cp+","+ville+","+sco1+","+sco2+","+form1+","+form2+");";
+                "VALUES ('"+nom+"','"+prenom+"','"+tel+"','"+mail+"','"+sexe+"','"+datenaiss+"','"+lieunaiss+"','"+adresse+
+                "','"+cp+"','"+ville+"','"+sco1+"','"+sco2+"',"+form1+","+form2+");";
 
         String querytest = "INSERT INTO Inscrit(insNom,insPrenom) VALUES ('testn','testp')";
 

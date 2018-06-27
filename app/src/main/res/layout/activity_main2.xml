@@ -6,9 +6,62 @@
     android:layout_height="match_parent"
     tools:context=".Activity.Main2Activity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="40dp">
+
+        <EditText
+            android:id="@+id/etNom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="30"
+            android:inputType="textPersonName"
+            android:hint="Nom"
+            android:textSize="30dp"/>
+
+        <EditText
+            android:id="@+id/etPrenom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="30"
+            android:inputType="textPersonName"
+            android:hint="Prenom"
+            android:textSize="30dp"/>
+
+        <EditText
+            android:id="@+id/etTel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="30"
+            android:hint="Téléphone"
+            android:inputType="phone"
+            android:textSize="30dp"/>
+
+        <EditText
+            android:id="@+id/etMail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="30"
+            android:hint="E-Mail"
+            android:inputType="textEmailAddress"
+            android:textSize="30dp"/>
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/sexe_array"
+            android:textSize="30dp"/>
+
+        <Button
+            android:id="@+id/btnValider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Valider" />
+
+
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

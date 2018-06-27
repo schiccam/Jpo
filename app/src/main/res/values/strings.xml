@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Jpo</string>
+
+    <string-array name="sexe_array">
+        <item>Homme</item>
+        <item>Femme</item>
+    </string-array>
 </resources>

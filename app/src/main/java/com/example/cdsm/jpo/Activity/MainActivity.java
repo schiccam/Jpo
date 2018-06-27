@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.cdsm.jpo.Classe.Formation;
+import com.example.cdsm.jpo.Classe.FormationDAO;
 import com.example.cdsm.jpo.Classe.Hash;
 import com.example.cdsm.jpo.Classe.Inscrit;
 import com.example.cdsm.jpo.Classe.InscritDAO;
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-         //TEST InscritDAO
+         /*TEST InscritDAO
         Inscrit i = new Inscrit();
 
         InscritDAO ide = new InscritDAO(this);
@@ -92,7 +94,26 @@ public class MainActivity extends AppCompatActivity {
 
         Inscrit testfd = ide.getInscrit(95);
 
-        List<Inscrit> list = ide.getAllInscrit();
+        List<Inscrit> list = ide.getAllInscrit();*/
+
+        /*Test Table Formation
+        FormationDAO f = new FormationDAO(this);
+        List allform = f.getAllFormation();
+        List allNv = f.getAllNiveauFormation();*/
+
+        /*Test des tables Inscrit, Formation, NiveauFormation
+        Inscrit inscrit = new Inscrit();
+        inscrit.setNom("Chiccam");
+        inscrit.setPrenom("Sylvain");
+        inscrit.setTel("0658219313");
+        inscrit.setMail("hotmail");
+        inscrit.setFormation1(1);
+        inscrit.setFormation2(2);
+
+        InscritDAO inscritDAO = new InscritDAO(this);
+        inscritDAO.Ajouter(inscrit);
+
+        List all = inscritDAO.getAllInscrit();*/
 
 
 
