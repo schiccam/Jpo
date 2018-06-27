@@ -7,61 +7,283 @@
     tools:context=".Activity.Main2Activity">
 
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="40dp">
+        android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/etNom"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="30"
-            android:inputType="textPersonName"
-            android:hint="Nom"
-            android:textSize="30dp"/>
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="vertical"
+            android:padding="40dp">
 
-        <EditText
-            android:id="@+id/etPrenom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="30"
-            android:inputType="textPersonName"
-            android:hint="Prenom"
-            android:textSize="30dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Information Personnelle"
+                android:textStyle="bold"
+                android:textSize="60sp"
+                android:textColor="@color/colorAccent"
+                android:layout_marginBottom="70dp"/>
 
-        <EditText
-            android:id="@+id/etTel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="30"
-            android:hint="Téléphone"
-            android:inputType="phone"
-            android:textSize="30dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/etMail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="30"
-            android:hint="E-Mail"
-            android:inputType="textEmailAddress"
-            android:textSize="30dp"/>
+                <EditText
+                    android:id="@+id/etNom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="30"
+                    android:hint="Nom"
+                    android:inputType="textPersonName"
+                    android:textSize="30sp" />
 
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:entries="@array/sexe_array"
-            android:textSize="30dp"/>
+                <EditText
+                    android:id="@+id/etPrenom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="30"
+                    android:hint="Prenom"
+                    android:inputType="textPersonName"
+                    android:textSize="30sp" />
+            </LinearLayout>
 
-        <Button
-            android:id="@+id/btnValider"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Valider" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/etTel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="30"
+                    android:hint="Téléphone"
+                    android:inputType="phone"
+                    android:textSize="30sp" />
+
+                <EditText
+                    android:id="@+id/etMail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="30"
+                    android:hint="E-Mail"
+                    android:inputType="textEmailAddress"
+                    android:textSize="30sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" Sexe : "
+                    android:textSize="30sp"
+                    android:textStyle="bold"/>
+
+                <Spinner
+                    android:id="@+id/spSexe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/sexe_array" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/etDateNaiss"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Date de naissance"
+                    android:inputType="date"
+                    android:textSize="30sp" />
+
+                <EditText
+                    android:id="@+id/etLieuNaiss"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="30"
+                    android:hint="Commune de naissance"
+                    android:inputType="textPersonName"
+                    android:textSize="30sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="6">
+
+                <EditText
+                    android:id="@+id/etAdresse"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:hint="Adresse"
+                    android:inputType="textPersonName"
+                    android:textSize="30sp" />
+
+                <EditText
+                    android:id="@+id/etVille"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:hint="Ville"
+                    android:inputType="textPersonName"
+                    android:textSize="30sp" />
+
+                <EditText
+                    android:id="@+id/etCp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="CP"
+                    android:inputType="textPersonName"
+                    android:textSize="30sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Scolarité"
+                android:textStyle="bold"
+                android:textSize="60sp"
+                android:textColor="@color/colorAccent"
+                android:layout_marginTop="70dp"
+                android:layout_marginBottom="70dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="7">
+
+                <EditText
+                    android:id="@+id/etAnneeSco1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Année"
+                    android:inputType="number"
+                    android:textSize="30sp" />
+
+                <EditText
+                    android:id="@+id/etLibSco1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:hint="Libellé du diplome"
+                    android:inputType="textPersonName"
+                    android:textSize="30sp" />
+
+                <EditText
+                    android:id="@+id/etEtabSco1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:hint="Etablissement + Ville"
+                    android:inputType="textPersonName"
+                    android:textSize="30sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="7">
+
+                <EditText
+                    android:id="@+id/etAnneeSco2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Année"
+                    android:inputType="number"
+                    android:textSize="30sp" />
+
+                <EditText
+                    android:id="@+id/etLibSco2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:hint="Libellé du diplome"
+                    android:inputType="textPersonName"
+                    android:textSize="30sp" />
+
+                <EditText
+                    android:id="@+id/etEtabSco2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:hint="Etablissement + Ville"
+                    android:inputType="textPersonName"
+                    android:textSize="30sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Choix de Formation"
+                android:textStyle="bold"
+                android:textSize="60sp"
+                android:textColor="@color/colorAccent"
+                android:layout_marginTop="70dp"
+                android:layout_marginBottom="70dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+                <Spinner
+                    android:id="@+id/spNvFormation1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+                <Spinner
+                    android:id="@+id/spLibFormation1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnValider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Valider"
+                android:textSize="30sp"
+                android:background="@color/colorAccent"
+                android:textColor="@android:color/white"
+                android:layout_gravity="center"/>
 
 
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
 </android.support.constraint.ConstraintLayout>

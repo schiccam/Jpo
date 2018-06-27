@@ -39,4 +39,9 @@ public class Formation {
     public void setNvformationid(int nvformationid) {
         this.nvformationid = nvformationid;
     }
+
+    @Override
+    public String toString() {
+        return this.lib;
+    }
 }

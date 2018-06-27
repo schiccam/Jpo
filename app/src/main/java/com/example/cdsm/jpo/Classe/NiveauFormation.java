@@ -25,4 +25,10 @@ public class NiveauFormation {
     public void setNvFormLib(String nvFormLib) {
         this.nvFormLib = nvFormLib;
     }
+
+    // Permet d'afficher le libellé dans le spinner
+    @Override
+    public String toString() {
+        return this.nvFormLib;
+    }
 }
