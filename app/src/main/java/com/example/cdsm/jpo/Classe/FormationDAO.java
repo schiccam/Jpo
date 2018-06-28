@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.cdsm.jpo.Interface.DAO;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,6 +71,35 @@ public class FormationDAO implements DAO<Formation> {
         closedb();
 
         return formation;
+    }
+
+    public List getFormationsByNvFormation(int nvformid){
+
+        String lib;
+        int id, nvFormID;
+
+        List<Formation> formations = new ArrayList<>();
+
+        opendb();
+
+        Cursor cr = db.rawQuery("SELECT * FROM Formation WHERE formNiveau ="+nvformid+" ;",null);
+        if(cr.moveToFirst()){
+            do {
+                id = cr.getInt(cr.getColumnIndex("form_id"));
+                lib = cr.getString(cr.getColumnIndex("formLib"));
+                nvFormID = cr.getInt(cr.getColumnIndex("formNiveau"));
+
+                Formation formation = new Formation(lib, nvFormID);
+                formation.setId(id);
+                formations.add(formation);
+            }
+            while (cr.moveToNext());
+            cr.close();
+        }
+
+        closedb();
+
+        return formations;
     }
 
     public List getAllFormation(){

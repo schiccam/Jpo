@@ -103,21 +103,23 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="2">
 
                 <EditText
                     android:id="@+id/etDateNaiss"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
                     android:hint="Date de naissance"
-                    android:inputType="date"
-                    android:textSize="30sp" />
+                    android:textSize="30sp"
+                    android:clickable="true"
+                    android:editable="false"/>
 
                 <EditText
                     android:id="@+id/etLieuNaiss"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="30"
@@ -156,7 +158,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="CP"
-                    android:inputType="textPersonName"
+                    android:inputType="number"
                     android:textSize="30sp" />
             </LinearLayout>
 
@@ -183,8 +185,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="Année"
-                    android:inputType="number"
-                    android:textSize="30sp" />
+                    android:textSize="30sp"
+                    android:clickable="true"
+                    android:editable="false"/>
 
                 <EditText
                     android:id="@+id/etLibSco1"
@@ -218,8 +221,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="Année"
-                    android:inputType="number"
-                    android:textSize="30sp" />
+                    android:textSize="30sp"
+                    android:clickable="true"
+                    android:editable="false"/>
 
                 <EditText
                     android:id="@+id/etLibSco2"
@@ -262,13 +266,16 @@
                     android:id="@+id/spNvFormation1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:layout_margin="20dp"/>
 
                 <Spinner
                     android:id="@+id/spLibFormation1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"/>
+                    android:layout_weight="3"
+                    android:layout_margin="20dp"
+                    android:visibility="invisible"/>
 
             </LinearLayout>
 
@@ -281,8 +288,6 @@
                 android:background="@color/colorAccent"
                 android:textColor="@android:color/white"
                 android:layout_gravity="center"/>
-
-
         </LinearLayout>
     </ScrollView>
 

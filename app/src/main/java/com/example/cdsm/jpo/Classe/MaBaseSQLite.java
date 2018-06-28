@@ -74,10 +74,13 @@ public class MaBaseSQLite extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO NiveauFormation VALUES (5,'BAC+5')");
 
         //Insertion de données dans la tables Formation
-        db.execSQL("INSERT INTO Formation VALUES (1,'BTS SIO',2)");
-        db.execSQL("INSERT INTO Formation VALUES (2,'Licence CDSM',3)");
-        db.execSQL("INSERT INTO Formation VALUES (3,'DCG',5)");
 
+        db.execSQL("INSERT INTO Formation VALUES (1,'BTS1',2)");
+        db.execSQL("INSERT INTO Formation VALUES (2,'BTS2',2)");
+        db.execSQL("INSERT INTO Formation VALUES (3,'BTS3',2)");
+        db.execSQL("INSERT INTO Formation VALUES (4,'BAC1',1)");
+        db.execSQL("INSERT INTO Formation VALUES (5,'BAC2',1)");
+        db.execSQL("INSERT INTO Formation VALUES (6,'BAC3',1)");
     }
 
     @Override

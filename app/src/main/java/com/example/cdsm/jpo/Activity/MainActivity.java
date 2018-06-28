@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.cdsm.jpo.BuildConfig;
 import com.example.cdsm.jpo.Classe.Formation;
 import com.example.cdsm.jpo.Classe.FormationDAO;
 import com.example.cdsm.jpo.Classe.Hash;
@@ -148,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
         View myView = getLayoutInflater().inflate(R.layout.dialog_login, null);
         final EditText etLogin = myView.findViewById(R.id.etLogin);
         final EditText etMdp = myView.findViewById(R.id.etMDP);
+
         Button valider = myView.findViewById(R.id.btnValider);
 
         valider.setOnClickListener(new View.OnClickListener() {
