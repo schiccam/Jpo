@@ -30,7 +30,7 @@ public class InscritDAO implements DAO<Inscrit> {
     public void Ajouter(Inscrit item) {
 
         String nom, prenom, tel, mail, sexe, datenaiss, lieunaiss, adresse, cp, ville, sco1, sco2;
-        int form1, form2;
+        int form;
 
         nom = item.getNom();
         prenom = item.getPrenom();
@@ -44,13 +44,12 @@ public class InscritDAO implements DAO<Inscrit> {
         ville = item.getVille();
         sco1 = item.getScolarite1();
         sco2 = item.getScolarite2();
-        form1 = item.getFormation1();
-        form2 = item.getFormation2();
+        form = item.getFormation();
 
         String query = "INSERT INTO Inscrit(insNom,insPrenom,insTel,insMail,insSexe,insDateNaiss" +
-                ",insLieuNaiss,insAdresse,insCP,insVille,insScolarite1,insScolarite2,insFormation1,insFormation2)" +
+                ",insLieuNaiss,insAdresse,insCP,insVille,insScolarite1,insScolarite2,insFormation)" +
                 "VALUES ('"+nom+"','"+prenom+"','"+tel+"','"+mail+"','"+sexe+"','"+datenaiss+"','"+lieunaiss+"','"+adresse+
-                "','"+cp+"','"+ville+"','"+sco1+"','"+sco2+"',"+form1+","+form2+");";
+                "','"+cp+"','"+ville+"','"+sco1+"','"+sco2+"',"+form+");";
 
         String querytest = "INSERT INTO Inscrit(insNom,insPrenom) VALUES ('testn','testp')";
 
@@ -76,7 +75,7 @@ public class InscritDAO implements DAO<Inscrit> {
     public void Modifier(Inscrit item) {
 
         String nom, prenom, tel, mail, sexe, datenaiss, lieunaiss, adresse, cp, ville, sco1, sco2;
-        int id, form1, form2;
+        int id, form;
 
         id = item.getId();
         nom = item.getNom();
@@ -91,13 +90,12 @@ public class InscritDAO implements DAO<Inscrit> {
         ville = item.getVille();
         sco1 = item.getScolarite1();
         sco2 = item.getScolarite2();
-        form1 = item.getFormation1();
-        form2 = item.getFormation2();
+        form = item.getFormation();
 
         String query = "UPDATE Inscrit SET insNom = '"+nom+"', insPrenom = '"+prenom+"', insTel = '"+tel+"'" +
                 ", insMail = '"+mail+"', insSexe = '"+sexe+"', insDatenaiss = '"+datenaiss+"', insLieuNaiss = '"+lieunaiss+"'" +
                 ", insAdresse = '"+adresse+"', insCP = '"+cp+"', insVille = '"+ville+"', insScolarite1 = '"+sco1+"'" +
-                ", insScolarite2 = '"+sco2+"', insFormation1 = '"+form1+"', insFormation2 ='"+form2+"' WHERE ins_id = "+id+";";
+                ", insScolarite2 = '"+sco2+"', insFormation = "+form+" WHERE ins_id = "+id+";";
 
         opendb();
 
@@ -129,8 +127,7 @@ public class InscritDAO implements DAO<Inscrit> {
                 inscrit.setVille(cr.getString(cr.getColumnIndex("insVille")));
                 inscrit.setScolarite1(cr.getString(cr.getColumnIndex("insScolarite1")));
                 inscrit.setScolarite2(cr.getString(cr.getColumnIndex("insScolarite2")));
-                inscrit.setFormation1(cr.getInt(cr.getColumnIndex("insFormation1")));
-                inscrit.setFormation2(cr.getInt(cr.getColumnIndex("insFormation2")));
+                inscrit.setFormation(cr.getInt(cr.getColumnIndex("insFormation")));
             }
             while (cr.moveToNext());
             cr.close();
@@ -144,7 +141,7 @@ public class InscritDAO implements DAO<Inscrit> {
     public List getAllInscrit(){
 
         String nom, prenom, tel, mail, sexe, datenaiss, lieunaiss, adresse, cp, ville, sco1, sco2;
-        int id, form1, form2;
+        int id, form;
 
         List<Inscrit> Inscrits = new ArrayList<Inscrit>();
 
@@ -166,11 +163,10 @@ public class InscritDAO implements DAO<Inscrit> {
                 ville = cr.getString(cr.getColumnIndex("insVille"));
                 sco1 = cr.getString(cr.getColumnIndex("insScolarite1"));
                 sco2 = cr.getString(cr.getColumnIndex("insScolarite2"));
-                form1 = cr.getInt(cr.getColumnIndex("insFormation1"));
-                form2 = cr.getInt(cr.getColumnIndex("insFormation2"));
+                form = cr.getInt(cr.getColumnIndex("insFormation"));
 
                 Inscrit inscrit = new Inscrit(nom,prenom,tel,mail,sexe,datenaiss,lieunaiss,adresse,
-                        cp,ville,sco1,sco2,form1,form2);
+                        cp,ville,sco1,sco2,form);
                 inscrit.setId(id);
                 Inscrits.add(inscrit);
             }

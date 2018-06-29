@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.Main2Activity">
+    tools:context=".Activity.AddInscritForm_Activity">
 
 
     <ScrollView
@@ -263,14 +263,14 @@
                 android:weightSum="4">
 
                 <Spinner
-                    android:id="@+id/spNvFormation1"
+                    android:id="@+id/spNvFormation"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_margin="20dp"/>
 
                 <Spinner
-                    android:id="@+id/spLibFormation1"
+                    android:id="@+id/spLibFormation"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
@@ -287,7 +287,9 @@
                 android:textSize="30sp"
                 android:background="@color/colorAccent"
                 android:textColor="@android:color/white"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:layout_margin="20dp"/>
         </LinearLayout>
     </ScrollView>
 

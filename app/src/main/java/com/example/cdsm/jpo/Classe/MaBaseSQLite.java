@@ -24,9 +24,8 @@ public class MaBaseSQLite extends SQLiteOpenHelper {
         +"insVille TEXT,"
         +"insScolarite1 TEXT,"
         +"insScolarite2 TEXT,"
-        +"insFormation1 INTEGER,"
-        +"insFormation2 INTEGER,"
-        +"FOREIGN KEY (insFormation1) REFERENCES Formation(form_id));";
+        +"insFormation INTEGER,"
+        +"FOREIGN KEY (insFormation) REFERENCES Formation(form_id));";
 
     private String createFormation ="CREATE TABLE IF NOT EXISTS Formation(" +
             "form_id INTEGER PRIMARY KEY AUTOINCREMENT," +

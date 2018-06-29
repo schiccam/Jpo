@@ -3,10 +3,10 @@ package com.example.cdsm.jpo.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -16,8 +16,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
+import com.example.cdsm.jpo.Classe.Formation;
 import com.example.cdsm.jpo.Classe.FormationDAO;
 import com.example.cdsm.jpo.Classe.Inscrit;
 import com.example.cdsm.jpo.Classe.InscritDAO;
@@ -25,14 +25,10 @@ import com.example.cdsm.jpo.Classe.MyNumberPicker;
 import com.example.cdsm.jpo.Classe.NiveauFormation;
 import com.example.cdsm.jpo.R;
 
-import org.w3c.dom.Text;
-
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
-public class Main2Activity extends AppCompatActivity {
+public class AddInscritForm_Activity extends AppCompatActivity {
 
     EditText etNom;
     EditText etPrenom;
@@ -50,8 +46,8 @@ public class Main2Activity extends AppCompatActivity {
     EditText etAnneeSco2;
     EditText etLibSco2;
     EditText etEtabSco2;
-    Spinner spNvFormation1;
-    Spinner spLibFormation1;
+    Spinner spNvFormation;
+    Spinner spLibFormation;
     Button btnValider;
 
 
@@ -59,7 +55,7 @@ public class Main2Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_addinscrit);
 
         etNom = findViewById(R.id.etNom);
         etPrenom = findViewById(R.id.etPrenom);
@@ -82,7 +78,7 @@ public class Main2Activity extends AppCompatActivity {
                             InputMethodManager.HIDE_NOT_ALWAYS);
 
                     Calendar calendar = Calendar.getInstance();
-                    DatePickerDialog datePickerDialog = new DatePickerDialog(Main2Activity.this, AlertDialog.THEME_HOLO_LIGHT,
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(AddInscritForm_Activity.this, AlertDialog.THEME_HOLO_LIGHT,
                             new DatePickerDialog.OnDateSetListener() {
                                 @Override
                                 public void onDateSet(DatePicker datePicker, int year, int month, int day) {
@@ -126,21 +122,21 @@ public class Main2Activity extends AppCompatActivity {
         etLibSco2 = findViewById(R.id.etLibSco2);
         etEtabSco2 = findViewById(R.id.etEtabSco2);
 
-        spNvFormation1 = findViewById(R.id.spNvFormation1);
+        spNvFormation = findViewById(R.id.spNvFormation);
         //Adapter avec Custom spinner pour modifier la taille du texte + données de la BDD
-        spNvFormation1.setAdapter(getNvFormations());
+        spNvFormation.setAdapter(getNvFormations());
 
-        spNvFormation1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spNvFormation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spLibFormation1 = findViewById(R.id.spLibFormation1);
+                spLibFormation = findViewById(R.id.spLibFormation);
                 //Rendre visible le spinner
-                spLibFormation1.setVisibility(View.VISIBLE);
+                spLibFormation.setVisibility(View.VISIBLE);
 
                 NiveauFormation nv = (NiveauFormation) parent.getSelectedItem();
 
                 //Adapter avec Custom spinner pour modifier la taille du texte + données de la BDD
-                spLibFormation1.setAdapter(getLibFormations(nv));
+                spLibFormation.setAdapter(getLibFormations(nv));
             }
 
             @Override
@@ -148,56 +144,69 @@ public class Main2Activity extends AppCompatActivity {
 
             }
         });
-
-
-
-
-
         btnValider = findViewById(R.id.btnValider);
         btnValider.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (checkDataEntered() == 12){
-                    Toast.makeText(Main2Activity.this,"OK",Toast.LENGTH_SHORT).show();
-
-                    String nom, prenom, tel, mail, sexe, datenaiss, lieunaiss,
-                            adresse, ville, cp, sco1, sco2, anneesco1, libsco1, etabsco1,
-                            anneesco2, libsco2, etabsco2, nvform1, libform1;
-
-                    nom = etNom.getText().toString();
-                    prenom = etPrenom.getText().toString();
-                    tel = etTel.getText().toString();
-                    mail = etMail.getText().toString();
-                    sexe = spSexe.getSelectedItem().toString();
-                    datenaiss = etDateNaiss.getText().toString();
-                    lieunaiss = etLieuNaiss.getText().toString();
-                    adresse = etAdresse.getText().toString();
-                    ville = etVille.getText().toString();
-                    cp = etCp.getText().toString();
-                    anneesco1 = etAnneeSco1.getText().toString();
-                    libsco1 = etLibSco1.getText().toString();
-                    etabsco1 = etEtabSco1.getText().toString();
-                    sco1 = anneesco1+" "+libsco1+" "+etabsco1;
-                    anneesco2 = etAnneeSco2.getText().toString();
-                    libsco2 = etLibSco2.getText().toString();
-                    etabsco2 = etEtabSco2.getText().toString();
-                    sco2 = anneesco2+" "+libsco2+" "+etabsco2;
-                    NiveauFormation nv1 = (NiveauFormation)spNvFormation1.getSelectedItem();
-                    NiveauFormation nv2 = (NiveauFormation)spNvFormation1.getSelectedItem();
-
-                    Inscrit inscrit = new Inscrit(nom, prenom, tel, mail, sexe, datenaiss, lieunaiss,
-                            adresse, cp, ville, sco1, sco2, 1 , 2);
-
-                    InscritDAO inscritDAO = new InscritDAO(Main2Activity.this);
-                    inscritDAO.Ajouter(inscrit);
-
-
-
-                }
+                ValiderIsClicked();
             }
         });
 
+        FillForTest();
+    }
+
+    private void ValiderIsClicked() {
+        if (checkDataEntered() == 12){
+
+            String nom, prenom, tel, mail, sexe, datenaiss, lieunaiss,
+                    adresse, ville, cp, sco1, sco2, anneesco1, libsco1, etabsco1,
+                    anneesco2, libsco2, etabsco2;
+
+            nom = etNom.getText().toString();
+            prenom = etPrenom.getText().toString();
+            tel = etTel.getText().toString();
+            mail = etMail.getText().toString();
+            sexe = spSexe.getSelectedItem().toString();
+            datenaiss = etDateNaiss.getText().toString();
+            lieunaiss = etLieuNaiss.getText().toString();
+            adresse = etAdresse.getText().toString();
+            ville = etVille.getText().toString();
+            cp = etCp.getText().toString();
+            anneesco1 = etAnneeSco1.getText().toString();
+            libsco1 = etLibSco1.getText().toString();
+            etabsco1 = etEtabSco1.getText().toString();
+            sco1 = anneesco1+" "+libsco1+" "+etabsco1;
+            anneesco2 = etAnneeSco2.getText().toString();
+            libsco2 = etLibSco2.getText().toString();
+            etabsco2 = etEtabSco2.getText().toString();
+            sco2 = anneesco2+" "+libsco2+" "+etabsco2;
+
+            Formation form = (Formation) spLibFormation.getSelectedItem();
+
+            Inscrit inscrit = new Inscrit(nom, prenom, tel, mail, sexe, datenaiss, lieunaiss,
+                    adresse, cp, ville, sco1, sco2, form.getId());
+
+            InscritDAO inscritDAO = new InscritDAO(AddInscritForm_Activity.this);
+            inscritDAO.Ajouter(inscrit);
+
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    private void FillForTest() {
+        etNom.setText("Chiccam");
+        etPrenom.setText("Sylvain");
+        etTel.setText("0658219313");
+        etMail.setText("schiccam@hotmail.fr");
+        etDateNaiss.setText("27/4/1994");
+        etLieuNaiss.setText("Sevres");
+        etAdresse.setText("100 allée du hetre pourpre");
+        etVille.setText("Dammarie-les-lys");
+        etCp.setText("77190");
+        etAnneeSco1.setText("2012");
+        etLibSco1.setText("BAC PRO EDPI");
+        etEtabSco1.setText("Lycée Joliot Curie Dammarie-les-lys");
     }
 
     private boolean isEmpty(EditText et){
@@ -324,6 +333,4 @@ public class Main2Activity extends AppCompatActivity {
         dialog.show();
 
     }
-
-
 }

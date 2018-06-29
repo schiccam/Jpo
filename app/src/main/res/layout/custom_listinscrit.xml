@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:padding="10dp"
+    android:weightSum="6">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="4"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/tvNomInscrit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Nom"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/tvLibFormation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Formation"
+            android:textSize="20sp"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnSuppr"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Suppr"
+        android:textSize="20sp"/>
+
+    <Button
+        android:id="@+id/btnModif"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Modif"
+        android:textSize="20sp"/>
+
+</LinearLayout>
