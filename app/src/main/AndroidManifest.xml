@@ -18,6 +18,7 @@
         </activity>
         <activity android:name=".Activity.AddInscritForm_Activity" />
         <activity android:name=".Activity.AdminActivity"/>
+        <activity android:name=".Activity.UpdateInscritForm_Activity"/>
     </application>
 
 </manifest>

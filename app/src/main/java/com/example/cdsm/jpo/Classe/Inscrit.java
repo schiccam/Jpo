@@ -13,15 +13,19 @@ public class Inscrit {
     private String adresse;
     private String cp;
     private String ville;
-    private String scolarite1;
-    private String scolarite2;
+    private String anneeSco1;
+    private String libSco1;
+    private String etabSco1;
+    private String anneeSco2;
+    private String libSco2;
+    private String etabSco2;
     private int formation;
 
     public Inscrit(){ }
 
 
     public Inscrit(String nom, String prenom, String tel, String mail, String sexe, String dateNaiss,
-                   String lieuNaiss, String adresse, String cp, String ville, String scolarite1,
+                   String lieuNaiss, String adresse, String cp, String ville, String anneeSco1,
                    String scolarite2, int formation){
 
         this.nom = nom;
@@ -34,8 +38,13 @@ public class Inscrit {
         this.adresse = adresse;
         this.cp = cp;
         this.ville = ville;
-        this.scolarite1 = scolarite1;
-        this.scolarite2 = scolarite2;
+        this.anneeSco1 = anneeSco1;
+        //TODO Modifier la base de données pour la scolariter
+       /*this.libSco1;
+        this.etabSco1;
+        this.anneeSco2;
+        this.libSco2;
+        this.etabSco2;*/
         this.formation = formation;
 
     }
@@ -121,22 +130,6 @@ public class Inscrit {
 
     public void setVille(String ville) {
         this.ville = ville;
-    }
-
-    public String getScolarite1() {
-        return scolarite1;
-    }
-
-    public void setScolarite1(String scolarite1) {
-        this.scolarite1 = scolarite1;
-    }
-
-    public String getScolarite2() {
-        return scolarite2;
-    }
-
-    public void setScolarite2(String scolarite2) {
-        this.scolarite2 = scolarite2;
     }
 
     public int getFormation() {

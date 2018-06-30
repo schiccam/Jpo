@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import com.example.cdsm.jpo.Activity.UpdateInscritForm_Activity;
 import com.example.cdsm.jpo.R;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,8 +46,6 @@ public class MyListViewAdapterInscrit extends BaseAdapter implements ListAdapter
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.custom_listinscrit, null);
-
-            //view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_listinscrit,parent,false);
         }
 
         //Handle TextView and display string from your list
@@ -80,8 +79,10 @@ public class MyListViewAdapterInscrit extends BaseAdapter implements ListAdapter
         btnModif.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
+                Intent intent = new Intent(context, UpdateInscritForm_Activity.class);
                 intent.putExtra("inscritID",list.get(position).getId());
+                context.startActivity(intent);
+
             }
         });
         return view;

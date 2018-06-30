@@ -152,7 +152,7 @@ public class UpdateInscritForm_Activity extends AppCompatActivity {
             }
         });
 
-        FillForTest();
+        FillForUpdate();
     }
 
     private void ValiderIsClicked() {
@@ -194,17 +194,22 @@ public class UpdateInscritForm_Activity extends AppCompatActivity {
         }
     }
 
-    private void FillForTest() {
-        etNom.setText("Chiccam");
-        etPrenom.setText("Sylvain");
-        etTel.setText("0658219313");
-        etMail.setText("schiccam@hotmail.fr");
-        etDateNaiss.setText("27/4/1994");
-        etLieuNaiss.setText("Sevres");
-        etAdresse.setText("100 allée du hetre pourpre");
-        etVille.setText("Dammarie-les-lys");
-        etCp.setText("77190");
-        etAnneeSco1.setText("2012");
+    private void FillForUpdate() {
+        Intent intent = getIntent();
+        int id = intent.getIntExtra("inscritID",0);
+        Inscrit inscrit = new InscritDAO(this).getInscrit(id);
+
+        etNom.setText(inscrit.getNom());
+        etPrenom.setText(inscrit.getPrenom());
+        etTel.setText(inscrit.getTel());
+        etMail.setText(inscrit.getMail());
+        etDateNaiss.setText(inscrit.getDateNaiss());
+        etLieuNaiss.setText(inscrit.getLieuNaiss());
+        etAdresse.setText(inscrit.getAdresse());
+        etVille.setText(inscrit.getVille());
+        etCp.setText(inscrit.getVille());
+        /*String s = inscrit.getScolarite1();
+        etAnneeSco1.setText(""); changement base de données*/
         etLibSco1.setText("BAC PRO EDPI");
         etEtabSco1.setText("Lycée Joliot Curie Dammarie-les-lys");
     }
