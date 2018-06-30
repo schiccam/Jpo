@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     ConstraintLayout layout;
     SQLiteDatabase db;
     Boolean Testdb;
+    AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void admin_Click(View view) {
 
+
         //Custom Dialog pour formulaire de connexion Admin
         AlertDialog.Builder myBuilder = new AlertDialog.Builder(this);
         View myView = getLayoutInflater().inflate(R.layout.dialog_login, null);
@@ -163,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
 
                         if(mdpHash.equals(password))
                         {
+                            CloseLoginDialog();
                             Intent intent = new Intent(MainActivity.this, AdminActivity.class);
                             startActivity(intent);
                         }
@@ -187,8 +190,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         myBuilder.setView(myView);
-        AlertDialog dialog = myBuilder.create();
+        dialog = myBuilder.create();
         dialog.show();
+    }
 
+    private void CloseLoginDialog(){
+        dialog.dismiss();
     }
 }
