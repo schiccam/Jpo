@@ -13,10 +13,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.cdsm.jpo.Classe.FormationDAO;
 import com.example.cdsm.jpo.Classe.Hash;
 import com.example.cdsm.jpo.Classe.Inscrit;
 import com.example.cdsm.jpo.Classe.InscritDAO;
 import com.example.cdsm.jpo.Classe.MaBaseSQLite;
+import com.example.cdsm.jpo.Classe.Stat;
 import com.example.cdsm.jpo.R;
 
 import java.util.List;
@@ -46,9 +48,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        InscritDAO inscritDAO = new InscritDAO(this);
-        List inscrits = inscritDAO.getAllInscrit();
-        Inscrit inscrit = inscritDAO.getInscrit(1);
+        List stats = new FormationDAO(this).getStat();
+
 
     }
 

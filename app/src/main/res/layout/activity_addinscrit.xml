@@ -97,7 +97,7 @@
                     android:id="@+id/spSexe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:entries="@array/sexe_array" />
+                    android:entries="@array/sexe_array"/>
             </LinearLayout>
 
             <LinearLayout

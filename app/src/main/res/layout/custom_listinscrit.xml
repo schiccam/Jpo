@@ -19,31 +19,35 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Nom"
-            android:textSize="20sp"/>
+            android:textSize="30sp"/>
 
         <TextView
             android:id="@+id/tvLibFormation"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Formation"
-            android:textSize="20sp"/>
+            android:textSize="30sp"/>
 
     </LinearLayout>
 
-    <Button
+    <ImageButton
         android:id="@+id/btnSuppr"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_weight="1"
-        android:text="Suppr"
-        android:textSize="20sp"/>
+        android:src="@drawable/delete"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:background="@null"/>
 
-    <Button
+    <ImageButton
         android:id="@+id/btnModif"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_weight="1"
-        android:text="Modif"
-        android:textSize="20sp"/>
+        android:src="@drawable/edit"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:background="@null"/>
 
 </LinearLayout>

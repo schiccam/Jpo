@@ -4,11 +4,15 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,6 +20,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.cdsm.jpo.Classe.Formation;
 import com.example.cdsm.jpo.Classe.FormationDAO;
@@ -152,6 +157,7 @@ public class AddInscritForm_Activity extends AppCompatActivity {
             }
         });
 
+        //a mettre en commentaire pour la présentation
         FillForTest();
     }
 
@@ -190,9 +196,12 @@ public class AddInscritForm_Activity extends AppCompatActivity {
             Intent intent = new Intent(this,MainActivity.class);
             startActivity(intent);
 
+            //TODO envoie de mail
+
         }
     }
 
+    // remplissage automatique du formulaire pour les tests
     private void FillForTest() {
         etNom.setText("Chiccam");
         etPrenom.setText("Sylvain");
@@ -208,16 +217,19 @@ public class AddInscritForm_Activity extends AppCompatActivity {
         etEtabSco1.setText("Lycée Joliot Curie Dammarie-les-lys");
     }
 
+    // vérification si Edittext est vide
     private boolean isEmpty(EditText et){
         CharSequence str = et.getText().toString();
         return TextUtils.isEmpty(str);
     }
 
+    //vérification si email est valide
     private boolean isEmailValide(EditText et){
         CharSequence email = et.getText().toString();
         return (!TextUtils.isEmpty(email)&& Patterns.EMAIL_ADDRESS.matcher(email).matches());
     }
 
+    //vérification de tous les élément obligatoire du layout
     private int checkDataEntered(){
         int cptValide = 0;
 
@@ -298,20 +310,51 @@ public class AddInscritForm_Activity extends AppCompatActivity {
         return cptValide;
     }
 
+    //récuperation de tous les objets NiveauFormation
     private ArrayAdapter getNvFormations(){
         FormationDAO formationDAO = new FormationDAO(this);
         List Formations = formationDAO.getAllNiveauFormation();
-        ArrayAdapter<NiveauFormation> adapter = new ArrayAdapter<NiveauFormation>(this, R.layout.custom_spinner, Formations);
+        ArrayAdapter<NiveauFormation> adapter = new ArrayAdapter<NiveauFormation>(this, R.layout.custom_spinner, Formations){
+            @Override
+            public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv =(TextView) view;
+                // Changement de couleur en fonction de la position
+                if(position%2 == 1) {
+                    tv.setBackgroundColor(Color.LTGRAY);
+                }
+                else {
+                    tv.setBackgroundColor(Color.WHITE);
+                }
+                return view;
+            }
+        };
         return adapter;
     }
 
+    //récuperation de toutes les formations en fonction du Niveau de la fomations
     private ArrayAdapter getLibFormations(NiveauFormation nv){
         FormationDAO formationDAO = new FormationDAO(this);
         List allFormations = formationDAO.getFormationsByNvFormation(nv.getId());
-        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.custom_spinner, allFormations);
+        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.custom_spinner, allFormations){
+            @Override
+            public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv =(TextView) view;
+                // Changement de couleur en fonction de la position
+                if(position%2 == 1) {
+                    tv.setBackgroundColor(Color.LTGRAY);
+                }
+                else {
+                    tv.setBackgroundColor(Color.WHITE);
+                }
+                return view;
+            }
+        };
         return adapter;
     }
 
+    //création du custom dialog pour les edittext année scolaire
     public void ChooseYear(final EditText editText) {
 
         //Custom Dialog pour formulaire de connexion Admin
@@ -332,4 +375,6 @@ public class AddInscritForm_Activity extends AppCompatActivity {
         dialog.show();
 
     }
+
+
 }

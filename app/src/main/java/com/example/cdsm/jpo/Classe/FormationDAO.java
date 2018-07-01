@@ -154,4 +154,27 @@ public class FormationDAO implements DAO<Formation> {
 
         return niveauFormations;
     }
+
+    public List getStat(){
+        List<Stat> stats = new ArrayList<>();
+
+        opendb();
+
+        Cursor cr = db.rawQuery("SELECT formLib, COUNT(*) AS count FROM Formation, Inscrit" +
+                " WHERE Inscrit.insFormation = Formation.form_id " +
+                " GROUP BY formLib;",null);
+
+        if(cr.moveToFirst()){
+            do {
+                String lib = cr.getString(cr.getColumnIndex("formLib"));
+                int cpt = cr.getInt(cr.getColumnIndex("count"));
+                stats.add(new Stat(lib, cpt));
+            }
+            while (cr.moveToNext());
+            cr.close();
+        }
+
+        closedb();
+        return stats;
+    }
 }

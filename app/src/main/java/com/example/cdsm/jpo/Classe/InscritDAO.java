@@ -164,7 +164,7 @@ public class InscritDAO implements DAO<Inscrit> {
 
         opendb();
 
-        Cursor cr = db.rawQuery("SELECT * FROM Inscrit;",null);
+        Cursor cr = db.rawQuery("SELECT * FROM Inscrit ORDER BY ins_id DESC;",null);
         if (cr.moveToFirst()) {
             do {
                 id = cr.getInt(cr.getColumnIndex("ins_id"));
