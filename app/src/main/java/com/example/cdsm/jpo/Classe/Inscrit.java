@@ -26,7 +26,8 @@ public class Inscrit {
 
     public Inscrit(String nom, String prenom, String tel, String mail, String sexe, String dateNaiss,
                    String lieuNaiss, String adresse, String cp, String ville, String anneeSco1,
-                   String scolarite2, int formation){
+                   String libSco1, String etabSco1, String anneeSco2, String libSco2, String etabSco2,
+                   int formation){
 
         this.nom = nom;
         this.prenom = prenom;
@@ -39,12 +40,11 @@ public class Inscrit {
         this.cp = cp;
         this.ville = ville;
         this.anneeSco1 = anneeSco1;
-        //TODO Modifier la base de données pour la scolariter
-       /*this.libSco1;
-        this.etabSco1;
-        this.anneeSco2;
-        this.libSco2;
-        this.etabSco2;*/
+        this.libSco1 = libSco1;
+        this.etabSco1 = etabSco1;
+        this.anneeSco2 = anneeSco2;
+        this.libSco2 = libSco2;
+        this.etabSco2 = etabSco2;
         this.formation = formation;
 
     }
@@ -132,8 +132,57 @@ public class Inscrit {
         this.ville = ville;
     }
 
+    public String getAnneeSco1() {
+        return anneeSco1;
+    }
+
+    public void setAnneeSco1(String anneeSco1) {
+        this.anneeSco1 = anneeSco1;
+    }
+
+    public String getLibSco1() {
+        return libSco1;
+    }
+
+    public void setLibSco1(String libSco1) {
+        this.libSco1 = libSco1;
+    }
+
+    public String getEtabSco1() {
+        return etabSco1;
+    }
+
+    public void setEtabSco1(String etabSco1) {
+        this.etabSco1 = etabSco1;
+    }
+
+    public String getAnneeSco2() {
+        return anneeSco2;
+    }
+
+    public void setAnneeSco2(String anneeSco2) {
+        this.anneeSco2 = anneeSco2;
+    }
+
+    public String getLibSco2() {
+        return libSco2;
+    }
+
+    public void setLibSco2(String libSco2) {
+        this.libSco2 = libSco2;
+    }
+
+    public String getEtabSco2() {
+        return etabSco2;
+    }
+
+    public void setEtabSco2(String etabSco2) {
+        this.etabSco2 = etabSco2;
+    }
+
     public int getFormation() {
         return formation;
+
     }
 
     public void setFormation(int formation) {

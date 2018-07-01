@@ -14,8 +14,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.cdsm.jpo.Classe.Hash;
+import com.example.cdsm.jpo.Classe.Inscrit;
+import com.example.cdsm.jpo.Classe.InscritDAO;
 import com.example.cdsm.jpo.Classe.MaBaseSQLite;
 import com.example.cdsm.jpo.R;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,96 +46,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-         /*TEST InscritDAO
-        Inscrit i = new Inscrit();
-
-        InscritDAO ide = new InscritDAO(this);
-        ide.Ajouter(i);
-        ide.Ajouter(i);
-        ide.Ajouter(i);
-        ide.Ajouter(i);
-
-
-        MaBaseSQLite maBaseSQLite = new MaBaseSQLite(this);
-        db = maBaseSQLite.getReadableDatabase();
-
-        String rawQuery = "INSERT INTO Inscrit(insNom, insPrenom, insTel, insMail) VALUES ('Chiccam','Sylvain','0658219313','schiccam@hotmail.fr')";
-        db.execSQL(rawQuery);
-
-        Inscrit iu = new Inscrit();
-        iu.setId(95);
-        iu.setNom("Chiccamtest");
-        iu.setPrenom("Sylvaintest");
-        iu.setTel("9999999999");
-        iu.setMail("TEst");
-
-        ide.Modifier(iu);
-
-        Cursor cr = db.rawQuery("SELECT * FROM Inscrit",null);
-
-        if (cr.moveToFirst()) {
-            do {
-                int id = cr.getInt(cr.getColumnIndex("ins_id"));
-                String nom = cr.getString(cr.getColumnIndex("insNom"));
-                String prenom = cr.getString(cr.getColumnIndex("insPrenom"));
-                String tel = cr.getString(cr.getColumnIndex("insTel"));
-                String mail = cr.getString(cr.getColumnIndex("insMail"));
-
-                String raw = id + " " + nom + " " + prenom + " " + tel + " " + mail;
-
-                Log.e("test BDD :",raw);
-
-            }
-            while (cr.moveToNext());
-            cr.close();
-        }
-
-        Inscrit testfd = ide.getInscrit(95);
-
-        List<Inscrit> list = ide.getAllInscrit();*/
-
-        /*Test Table Formation
-        FormationDAO f = new FormationDAO(this);
-        List allform = f.getAllFormation();
-        List allNv = f.getAllNiveauFormation();*/
-
-        /*Test des tables Inscrit, Formation, NiveauFormation
-        Inscrit inscrit = new Inscrit();
-        inscrit.setNom("Chiccam");
-        inscrit.setPrenom("Sylvain");
-        inscrit.setTel("0658219313");
-        inscrit.setMail("hotmail");
-        inscrit.setFormation1(1);
-        inscrit.setFormation2(2);
-
         InscritDAO inscritDAO = new InscritDAO(this);
-        inscritDAO.Ajouter(inscrit);
-
-        List all = inscritDAO.getAllInscrit();*/
-
-
-
-
-        /*TEST Table Admin Locale
-        MaBaseSQLite maBaseSQLite = new MaBaseSQLite(this);
-        db = maBaseSQLite.getReadableDatabase();
-
-        Cursor cr = db.rawQuery("SELECT * FROM Admin",null);
-
-        if (cr.moveToFirst()) {
-            do {
-                int id = cr.getInt(cr.getColumnIndex("ad_id"));
-                String login = cr.getString(cr.getColumnIndex("adLogin"));
-                String mdp = cr.getString(cr.getColumnIndex("adMdp"));
-
-                String raw = id + " " + login + " " + mdp;
-
-                Log.e("test MDP :", raw);
-
-            }
-            while (cr.moveToNext());
-            cr.close();
-        }*/
+        List inscrits = inscritDAO.getAllInscrit();
+        Inscrit inscrit = inscritDAO.getInscrit(1);
 
     }
 

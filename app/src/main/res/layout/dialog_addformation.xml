@@ -9,7 +9,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Administrateur"
+        android:text="Ajout Formation"
         android:layout_gravity="center"
         android:textSize="25dp"
         android:textStyle="bold"
@@ -17,7 +17,7 @@
         android:textColor="@color/colorAccent"/>
 
     <EditText
-        android:id="@+id/etLogin"
+        android:id="@+id/etLibForm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -25,14 +25,11 @@
         android:inputType="textPersonName"
         android:layout_marginTop="10dp"/>
 
-    <EditText
-        android:id="@+id/etMDP"
+    <Spinner
+        android:id="@+id/spNvFormation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Mot de Passe"
-        android:inputType="textPassword"
-        android:layout_marginTop="10dp"/>
+        android:layout_margin="20dp"/>
 
     <Button
         android:id="@+id/btnValider"

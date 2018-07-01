@@ -22,8 +22,12 @@ public class MaBaseSQLite extends SQLiteOpenHelper {
         +"insAdresse TEXT,"
         +"insCP TEXT,"
         +"insVille TEXT,"
-        +"insScolarite1 TEXT,"
-        +"insScolarite2 TEXT,"
+        +"insAnneeSco1 TEXT,"
+            +"insLibSco1 TEXT,"
+            +"insEtabSco1 TEXT,"
+            +"insAnneeSco2 TEXT,"
+            +"insLibSco2 TEXT,"
+            +"insEtabSco2 TEXT,"
         +"insFormation INTEGER,"
         +"FOREIGN KEY (insFormation) REFERENCES Formation(form_id));";
 

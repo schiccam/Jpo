@@ -30,6 +30,8 @@ import java.util.List;
 
 public class UpdateInscritForm_Activity extends AppCompatActivity {
 
+    Intent intent;
+
     EditText etNom;
     EditText etPrenom;
     EditText etTel;
@@ -56,6 +58,8 @@ public class UpdateInscritForm_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_updateinscrit);
+
+        intent = getIntent();
 
         etNom = findViewById(R.id.etNom);
         etPrenom = findViewById(R.id.etPrenom);
@@ -159,7 +163,7 @@ public class UpdateInscritForm_Activity extends AppCompatActivity {
         if (checkDataEntered() == 12){
 
             String nom, prenom, tel, mail, sexe, datenaiss, lieunaiss,
-                    adresse, ville, cp, sco1, sco2, anneesco1, libsco1, etabsco1,
+                    adresse, ville, cp, anneesco1, libsco1, etabsco1,
                     anneesco2, libsco2, etabsco2;
 
             nom = etNom.getText().toString();
@@ -175,27 +179,27 @@ public class UpdateInscritForm_Activity extends AppCompatActivity {
             anneesco1 = etAnneeSco1.getText().toString();
             libsco1 = etLibSco1.getText().toString();
             etabsco1 = etEtabSco1.getText().toString();
-            sco1 = anneesco1+" "+libsco1+" "+etabsco1;
             anneesco2 = etAnneeSco2.getText().toString();
             libsco2 = etLibSco2.getText().toString();
             etabsco2 = etEtabSco2.getText().toString();
-            sco2 = anneesco2+" "+libsco2+" "+etabsco2;
 
             Formation form = (Formation) spLibFormation.getSelectedItem();
 
             Inscrit inscrit = new Inscrit(nom, prenom, tel, mail, sexe, datenaiss, lieunaiss,
-                    adresse, cp, ville, sco1, sco2, form.getId());
+                    adresse, cp, ville, anneesco1, libsco1, etabsco1 , anneesco2, libsco2, etabsco2, form.getId());
+            inscrit.setId(intent.getIntExtra("inscritID",0));
 
             InscritDAO inscritDAO = new InscritDAO(UpdateInscritForm_Activity.this);
-            inscritDAO.Ajouter(inscrit);
+            inscritDAO.Modifier(inscrit);
 
-            Intent intent = new Intent(this,MainActivity.class);
+            Intent intent = new Intent(this,AdminActivity.class);
             startActivity(intent);
+
         }
     }
 
     private void FillForUpdate() {
-        Intent intent = getIntent();
+
         int id = intent.getIntExtra("inscritID",0);
         Inscrit inscrit = new InscritDAO(this).getInscrit(id);
 
@@ -207,11 +211,33 @@ public class UpdateInscritForm_Activity extends AppCompatActivity {
         etLieuNaiss.setText(inscrit.getLieuNaiss());
         etAdresse.setText(inscrit.getAdresse());
         etVille.setText(inscrit.getVille());
-        etCp.setText(inscrit.getVille());
-        /*String s = inscrit.getScolarite1();
-        etAnneeSco1.setText(""); changement base de données*/
-        etLibSco1.setText("BAC PRO EDPI");
-        etEtabSco1.setText("Lycée Joliot Curie Dammarie-les-lys");
+        etCp.setText(inscrit.getCp());
+        etAnneeSco1.setText(inscrit.getAnneeSco1());
+        String a = inscrit.getLibSco1();
+        etLibSco1.setText(inscrit.getLibSco1());
+        String b = inscrit.getEtabSco1();
+        etEtabSco1.setText(inscrit.getEtabSco1());
+        etAnneeSco2.setText(inscrit.getAnneeSco2());
+        etLibSco2.setText(inscrit.getLibSco2());
+        etEtabSco2.setText(inscrit.getEtabSco2());
+
+        FormationDAO formationDAO = new FormationDAO(this);
+        int nvForm = formationDAO.getFormation(inscrit.getFormation()).getNvformationid();
+        spNvFormation.setSelection(getIndexNvForm(spNvFormation,nvForm));
+
+
+        spLibFormation = findViewById(R.id.spLibFormation);
+        spLibFormation.setVisibility(View.VISIBLE);
+
+        NiveauFormation nv =(NiveauFormation)spNvFormation.getSelectedItem();
+
+        //Adapter avec Custom spinner pour modifier la taille du texte + données de la BDD
+        spLibFormation.setAdapter(getLibFormations(nv));
+
+        int form = formationDAO.getFormation(inscrit.getFormation()).getId();
+        int spinnerposition = getIndexLibForm(spLibFormation,form);
+        //TODO régler le bug spinner n'affiche pas le lib correct
+        spLibFormation.setSelection(spinnerposition);
     }
 
     private boolean isEmpty(EditText et){
@@ -337,5 +363,25 @@ public class UpdateInscritForm_Activity extends AppCompatActivity {
         android.support.v7.app.AlertDialog dialog = myBuilder.create();
         dialog.show();
 
+    }
+
+    private int getIndexNvForm(Spinner spinner, int id){
+        for (int i=0;i<spinner.getCount();i++){
+            NiveauFormation nv = (NiveauFormation)spinner.getItemAtPosition(i);
+            if (nv.getId() == id){
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    private int getIndexLibForm(Spinner spinner, int id){
+        for (int i=0;i<spinner.getCount();i++){
+            Formation form = (Formation)spinner.getItemAtPosition(i);
+            if (form.getId() == id){
+                return i;
+            }
+        }
+        return 0;
     }
 }

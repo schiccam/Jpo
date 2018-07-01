@@ -175,22 +175,21 @@ public class AddInscritForm_Activity extends AppCompatActivity {
             anneesco1 = etAnneeSco1.getText().toString();
             libsco1 = etLibSco1.getText().toString();
             etabsco1 = etEtabSco1.getText().toString();
-            sco1 = anneesco1+" "+libsco1+" "+etabsco1;
             anneesco2 = etAnneeSco2.getText().toString();
             libsco2 = etLibSco2.getText().toString();
             etabsco2 = etEtabSco2.getText().toString();
-            sco2 = anneesco2+" "+libsco2+" "+etabsco2;
 
             Formation form = (Formation) spLibFormation.getSelectedItem();
 
             Inscrit inscrit = new Inscrit(nom, prenom, tel, mail, sexe, datenaiss, lieunaiss,
-                    adresse, cp, ville, sco1, sco2, form.getId());
+                    adresse, cp, ville, anneesco1,libsco1,etabsco1,anneesco2,libsco2,etabsco2, form.getId());
 
             InscritDAO inscritDAO = new InscritDAO(AddInscritForm_Activity.this);
             inscritDAO.Ajouter(inscrit);
 
             Intent intent = new Intent(this,MainActivity.class);
             startActivity(intent);
+
         }
     }
 
