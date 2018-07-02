@@ -10,12 +10,14 @@ import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 
 import com.example.cdsm.jpo.Classe.Formation;
 import com.example.cdsm.jpo.Classe.FormationDAO;
@@ -213,7 +215,6 @@ public class UpdateInscritForm_Activity extends AppCompatActivity {
         etVille.setText(inscrit.getVille());
         etCp.setText(inscrit.getCp());
         etAnneeSco1.setText(inscrit.getAnneeSco1());
-        String a = inscrit.getLibSco1();
         etLibSco1.setText(inscrit.getLibSco1());
         String b = inscrit.getEtabSco1();
         etEtabSco1.setText(inscrit.getEtabSco1());
@@ -230,14 +231,24 @@ public class UpdateInscritForm_Activity extends AppCompatActivity {
         spLibFormation.setVisibility(View.VISIBLE);
 
         NiveauFormation nv =(NiveauFormation)spNvFormation.getSelectedItem();
-
+        SpinnerAdapter adapter = getLibFormations(nv);
         //Adapter avec Custom spinner pour modifier la taille du texte + données de la BDD
-        spLibFormation.setAdapter(getLibFormations(nv));
+        spLibFormation.setAdapter(adapter);
 
         int form = formationDAO.getFormation(inscrit.getFormation()).getId();
-        int spinnerposition = getIndexLibForm(spLibFormation,form);
+        final int spinnerposition = getIndexLibForm(spLibFormation,form);
         //TODO régler le bug spinner n'affiche pas le lib correct
         spLibFormation.setSelection(spinnerposition);
+
+        /*spLibFormation.post(new Runnable() {
+            @Override
+            public void run() {
+                spLibFormation.setSelection(spinnerposition);
+                spLibFormation.setAdapter(spLibFormation.getAdapter());
+                spLibFormation.getAdapter().n
+            }
+        });*/
+
     }
 
     private boolean isEmpty(EditText et){

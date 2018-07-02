@@ -108,13 +108,15 @@ public class InscritDAO implements DAO<Inscrit> {
                 ", insMail = '"+mail+"', insSexe = '"+sexe+"', insDatenaiss = '"+datenaiss+"', insLieuNaiss = '"+lieunaiss+"'" +
                 ", insAdresse = '"+adresse+"', insCP = '"+cp+"', insVille = '"+ville+"', insAnneeSco1 = '"+anneeSco1+"'" +
                 ", insLibSco1 = '"+libSco1+"', insEtabSco1 = '"+etabSco1+"', insAnneeSco2 = '"+anneeSco2+"'," +
-                "insLibSco2 = '"+libSco2+"', insEtabSco1 = '"+etabSco2+"', insFormation = "+form+" WHERE ins_id = "+id+";";
+                "insLibSco2 = '"+libSco2+"', insEtabSco2 = '"+etabSco2+"', insFormation = "+form+" WHERE ins_id = "+id+";";
 
         opendb();
 
         db.execSQL(query);
 
         closedb();
+
+
 
     }
 

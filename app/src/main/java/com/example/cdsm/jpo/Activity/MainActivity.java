@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         List stats = new FormationDAO(this).getStat();
-
+        List inscrits = new InscritDAO(this).getAllInscrit();
 
     }
 
