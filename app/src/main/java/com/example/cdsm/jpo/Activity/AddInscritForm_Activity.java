@@ -78,6 +78,22 @@ public class AddInscritForm_Activity extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
+                    int y, m, d;
+                    // si edittext est vide date par defaut
+                    if(etDateNaiss.getText().toString() == ""){
+                        y = 2000;
+                        m = 5;
+                        d = 15;
+                    }
+                    // sinon date defaut = valeur edittext
+                    else{
+                        String date = etDateNaiss.getText().toString();
+                        String[] parts = date.split("/");
+                        d = Integer.parseInt(parts[0]);
+                        m = Integer.parseInt(parts[1]) - 1;
+                        y = Integer.parseInt(parts[2]);
+                    }
+
                     InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
                             InputMethodManager.HIDE_NOT_ALWAYS);
@@ -89,7 +105,7 @@ public class AddInscritForm_Activity extends AppCompatActivity {
                                 public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                                     etDateNaiss.setText(day + "/" + (month + 1) + "/" + year);
                                 }
-                            }, 2000, 5, 15);
+                            }, y, m, d);
                     datePickerDialog.show();
                 }
             }
@@ -165,7 +181,7 @@ public class AddInscritForm_Activity extends AppCompatActivity {
         if (checkDataEntered() == 12){
 
             String nom, prenom, tel, mail, sexe, datenaiss, lieunaiss,
-                    adresse, ville, cp, sco1, sco2, anneesco1, libsco1, etabsco1,
+                    adresse, ville, cp, anneesco1, libsco1, etabsco1,
                     anneesco2, libsco2, etabsco2;
 
             nom = etNom.getText().toString();
