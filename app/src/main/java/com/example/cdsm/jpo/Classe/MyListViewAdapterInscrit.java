@@ -107,7 +107,7 @@ public class MyListViewAdapterInscrit extends BaseAdapter implements ListAdapter
 
             }
         });
-
+        //changement de couleur en fonction de la position
         if(position % 2 == 0)
             view.setBackgroundColor(Color.LTGRAY);
         else

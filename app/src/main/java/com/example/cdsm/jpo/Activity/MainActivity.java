@@ -48,8 +48,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        List stats = new FormationDAO(this).getStat();
-        List inscrits = new InscritDAO(this).getAllInscrit();
+        // Test
+        //List stats = new FormationDAO(this).getStat();
+        //List inscrits = new InscritDAO(this).getAllInscrit();
 
     }
 
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         valider.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Vérification pour connexion admin
                 if(!etLogin.getText().toString().isEmpty() && !etMdp.getText().toString().isEmpty()){
 
                     String login = etLogin.getText().toString();
@@ -75,14 +77,17 @@ public class MainActivity extends AppCompatActivity {
                     MaBaseSQLite maBaseSQLite = new MaBaseSQLite(MainActivity.this);
                     db = maBaseSQLite.getReadableDatabase();
 
+                    //Récupération de la ligne correspondant au login
                     Cursor cr = db.rawQuery("SELECT * FROM Admin WHERE adlogin = '"+login+"' ",null);
+                    //si login existe vérification du mot de passe
                     if (cr.moveToFirst()) {
 
                         String password = cr.getString(cr.getColumnIndex("adMdp"));
                         String mdpHash = Hash.md5(mdp);
-
+                        //si mdp de l'admin = mdp dans la base de données Intent vers AdminActivity
                         if(mdpHash.equals(password))
                         {
+                            //fermeture du dialog
                             CloseLoginDialog();
                             Intent intent = new Intent(MainActivity.this, AdminActivity.class);
                             startActivity(intent);
@@ -107,15 +112,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Affichage du dialog dnas l'UI
         myBuilder.setView(myView);
         dialog = myBuilder.create();
         dialog.show();
     }
 
+    //fermeture du dialog
     private void CloseLoginDialog(){
         dialog.dismiss();
     }
 
+    // Intent vers TestRESTActivity
     public void REST_Clicked(View view) {
         startActivity(new Intent(this, TestRESTActivity.class));
     }

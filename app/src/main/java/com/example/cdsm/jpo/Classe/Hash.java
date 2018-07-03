@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class Hash {
 
+    //Methode de hash
     public static String md5(String s) {
         try {
             // Create MD5 Hash

@@ -79,11 +79,28 @@ public class UpdateInscritForm_Activity extends AppCompatActivity {
         etDateNaiss.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
+                //Si edittext focus
                 if(hasFocus){
+                    int y, m, d;
+                    // si edittext est vide date par defaut
+                    if(etDateNaiss.getText().toString() == ""){
+                        y = 2000;
+                        m = 5;
+                        d = 15;
+                    }
+                    // sinon date defaut = valeur edittext
+                    else{
+                        String date = etDateNaiss.getText().toString();
+                        String[] parts = date.split("/");
+                        d = Integer.parseInt(parts[0]);
+                        m = Integer.parseInt(parts[1]) - 1;
+                        y = Integer.parseInt(parts[2]);
+                    }
+                    // Cacher le clavier
                     InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
                             InputMethodManager.HIDE_NOT_ALWAYS);
-
+                    // Cration du DatePicker
                     Calendar calendar = Calendar.getInstance();
                     DatePickerDialog datePickerDialog = new DatePickerDialog(UpdateInscritForm_Activity.this, AlertDialog.THEME_HOLO_LIGHT,
                             new DatePickerDialog.OnDateSetListener() {
@@ -91,7 +108,7 @@ public class UpdateInscritForm_Activity extends AppCompatActivity {
                                 public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                                     etDateNaiss.setText(day + "/" + (month + 1) + "/" + year);
                                 }
-                            }, 2000, 5, 15);
+                            }, y, m, d);
                     datePickerDialog.show();
                 }
             }
@@ -163,6 +180,7 @@ public class UpdateInscritForm_Activity extends AppCompatActivity {
     }
 
     private void ValiderIsClicked() {
+        //Si les 12 champs obligatoires ne sont pas vide
         if (checkDataEntered() == 12){
 
             String nom, prenom, tel, mail, sexe, datenaiss, lieunaiss,
@@ -188,11 +206,14 @@ public class UpdateInscritForm_Activity extends AppCompatActivity {
 
             Formation form = (Formation) spLibFormation.getSelectedItem();
 
+            //Insertion des données dans un objet Inscrit
             Inscrit inscrit = new Inscrit(nom, prenom, tel, mail, sexe, datenaiss, lieunaiss,
                     adresse, cp, ville, anneesco1, libsco1, etabsco1 , anneesco2, libsco2, etabsco2, form.getId());
+            //Ajout de l'id a l'objet inscrit
             inscrit.setId(intent.getIntExtra("inscritID",0));
 
             InscritDAO inscritDAO = new InscritDAO(UpdateInscritForm_Activity.this);
+            // Modification de l'inscrit dans la Table Inscrit
             inscritDAO.Modifier(inscrit);
 
             Intent intent = new Intent(this,AdminActivity.class);
@@ -200,10 +221,11 @@ public class UpdateInscritForm_Activity extends AppCompatActivity {
 
         }
     }
-
+    // remplissage automatique du formulaire grâce à l'id de l'inscrit dans l'intent
     private void FillForUpdate() {
-
+        //Récupération de l'id
         int id = intent.getIntExtra("inscritID",0);
+        //Récupération de l'inscrit avec l'id correspondant
         Inscrit inscrit = new InscritDAO(this).getInscrit(id);
 
         etNom.setText(inscrit.getNom());
@@ -238,28 +260,28 @@ public class UpdateInscritForm_Activity extends AppCompatActivity {
 
         int form = formationDAO.getFormation(inscrit.getFormation()).getId();
         final int spinnerposition = getIndexLibForm(spLibFormation,form);
-        //TODO régler le bug spinner n'affiche pas le lib correct
 
+        //Astuce qui régle le bug du spinner qui n'affiche pas le lib correct
         new Handler().postDelayed(new Runnable() {
             public void run() {
                 spLibFormation.setSelection(spinnerposition);
             }
         }, 100);
-
-
-
     }
 
+    // vérification si Edittext est vide
     private boolean isEmpty(EditText et){
         CharSequence str = et.getText().toString();
         return TextUtils.isEmpty(str);
     }
 
+    //vérification si email est valide
     private boolean isEmailValide(EditText et){
         CharSequence email = et.getText().toString();
         return (!TextUtils.isEmpty(email)&& Patterns.EMAIL_ADDRESS.matcher(email).matches());
     }
 
+    //vérification de tous les élément obligatoire du layout
     private int checkDataEntered(){
         int cptValide = 0;
 
@@ -340,16 +362,22 @@ public class UpdateInscritForm_Activity extends AppCompatActivity {
         return cptValide;
     }
 
+    //récuperation de tous les objets NiveauFormation
     private ArrayAdapter getNvFormations(){
         FormationDAO formationDAO = new FormationDAO(this);
+        //récuperation de tous les objets NiveauFormation dans une list
         List Formations = formationDAO.getAllNiveauFormation();
+        //Création de l'adapter pour le spinner avec son XML et ses données
         ArrayAdapter<NiveauFormation> adapter = new ArrayAdapter<NiveauFormation>(this, R.layout.custom_spinner, Formations);
         return adapter;
     }
 
+    //récuperation de toutes les formations en fonction du Niveau de la fomations
     private ArrayAdapter getLibFormations(NiveauFormation nv){
         FormationDAO formationDAO = new FormationDAO(this);
+        //récuperation de tous les objets Formation dans une list en fonction du niveau choisi
         List allFormations = formationDAO.getFormationsByNvFormation(nv.getId());
+        //Création de l'adapter pour le spinner avec son XML et ses données
         ArrayAdapter adapter = new ArrayAdapter(this, R.layout.custom_spinner, allFormations);
         return adapter;
     }

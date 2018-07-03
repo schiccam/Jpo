@@ -77,6 +77,7 @@ public class AddInscritForm_Activity extends AppCompatActivity {
         etDateNaiss.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
+                //Si edittext focus
                 if(hasFocus){
                     int y, m, d;
                     // si edittext est vide date par defaut
@@ -93,11 +94,11 @@ public class AddInscritForm_Activity extends AppCompatActivity {
                         m = Integer.parseInt(parts[1]) - 1;
                         y = Integer.parseInt(parts[2]);
                     }
-
+                    // Cacher le clavier
                     InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
                             InputMethodManager.HIDE_NOT_ALWAYS);
-
+                    // Cration du DatePicker
                     Calendar calendar = Calendar.getInstance();
                     DatePickerDialog datePickerDialog = new DatePickerDialog(AddInscritForm_Activity.this, AlertDialog.THEME_HOLO_LIGHT,
                             new DatePickerDialog.OnDateSetListener() {
@@ -106,6 +107,7 @@ public class AddInscritForm_Activity extends AppCompatActivity {
                                     etDateNaiss.setText(day + "/" + (month + 1) + "/" + year);
                                 }
                             }, y, m, d);
+                    //Affichage du DatePicker dans l'UI
                     datePickerDialog.show();
                 }
             }
@@ -178,12 +180,14 @@ public class AddInscritForm_Activity extends AppCompatActivity {
     }
 
     private void ValiderIsClicked() {
+        //Si les 12 champs obligatoires ne sont pas vide
         if (checkDataEntered() == 12){
 
             String nom, prenom, tel, mail, sexe, datenaiss, lieunaiss,
                     adresse, ville, cp, anneesco1, libsco1, etabsco1,
                     anneesco2, libsco2, etabsco2;
 
+            //Récuperation des données de tous les Widget
             nom = etNom.getText().toString();
             prenom = etPrenom.getText().toString();
             tel = etTel.getText().toString();
@@ -203,10 +207,12 @@ public class AddInscritForm_Activity extends AppCompatActivity {
 
             Formation form = (Formation) spLibFormation.getSelectedItem();
 
+            //Insertion des données dans un objet Inscrit
             Inscrit inscrit = new Inscrit(nom, prenom, tel, mail, sexe, datenaiss, lieunaiss,
                     adresse, cp, ville, anneesco1,libsco1,etabsco1,anneesco2,libsco2,etabsco2, form.getId());
 
             InscritDAO inscritDAO = new InscritDAO(AddInscritForm_Activity.this);
+            //Insertion de l'inscrit dans la Table Inscrit
             inscritDAO.Ajouter(inscrit);
 
             Intent intent = new Intent(this,MainActivity.class);
@@ -329,7 +335,9 @@ public class AddInscritForm_Activity extends AppCompatActivity {
     //récuperation de tous les objets NiveauFormation
     private ArrayAdapter getNvFormations(){
         FormationDAO formationDAO = new FormationDAO(this);
+        //récuperation de tous les objets NiveauFormation dans une list
         List Formations = formationDAO.getAllNiveauFormation();
+        //Création de l'adapter pour le spinner avec son XML et ses données
         ArrayAdapter<NiveauFormation> adapter = new ArrayAdapter<NiveauFormation>(this, R.layout.custom_spinner, Formations){
             @Override
             public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -351,7 +359,9 @@ public class AddInscritForm_Activity extends AppCompatActivity {
     //récuperation de toutes les formations en fonction du Niveau de la fomations
     private ArrayAdapter getLibFormations(NiveauFormation nv){
         FormationDAO formationDAO = new FormationDAO(this);
+        //récuperation de tous les objets Formation dans une list en fonction du niveau choisi
         List allFormations = formationDAO.getFormationsByNvFormation(nv.getId());
+        //Création de l'adapter pour le spinner avec son XML et ses données
         ArrayAdapter adapter = new ArrayAdapter(this, R.layout.custom_spinner, allFormations){
             @Override
             public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
