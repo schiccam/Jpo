@@ -16,11 +16,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.AddInscritForm_Activity"
-            android:noHistory="true"/>
-        <activity android:name=".Activity.AdminActivity"/>
-        <activity android:name=".Activity.UpdateInscritForm_Activity"
-            android:noHistory="true"/>
+        <activity
+            android:name=".Activity.AddInscritForm_Activity"
+            android:noHistory="true" />
+        <activity android:name=".Activity.AdminActivity" />
+        <activity
+            android:name=".Activity.UpdateInscritForm_Activity"
+            android:noHistory="true" />
+        <activity android:name=".Activity.TestRESTActivity"></activity>
     </application>
 
 </manifest>

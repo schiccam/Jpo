@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -238,16 +239,14 @@ public class UpdateInscritForm_Activity extends AppCompatActivity {
         int form = formationDAO.getFormation(inscrit.getFormation()).getId();
         final int spinnerposition = getIndexLibForm(spLibFormation,form);
         //TODO régler le bug spinner n'affiche pas le lib correct
-        spLibFormation.setSelection(spinnerposition);
 
-        /*spLibFormation.post(new Runnable() {
-            @Override
+        new Handler().postDelayed(new Runnable() {
             public void run() {
                 spLibFormation.setSelection(spinnerposition);
-                spLibFormation.setAdapter(spLibFormation.getAdapter());
-                spLibFormation.getAdapter().n
             }
-        });*/
+        }, 100);
+
+
 
     }
 

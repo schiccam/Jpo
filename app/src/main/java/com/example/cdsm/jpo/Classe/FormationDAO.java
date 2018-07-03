@@ -177,4 +177,13 @@ public class FormationDAO implements DAO<Formation> {
         closedb();
         return stats;
     }
+
+    public void EmptyTableFormation()
+    {
+        opendb();
+
+        db.execSQL("DELETE FROM Formation");
+
+        closedb();
+    }
 }

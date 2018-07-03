@@ -203,6 +203,14 @@ public class InscritDAO implements DAO<Inscrit> {
 
     }
 
+    public void EmptyTableInscrit(){
+        opendb();
+
+        db.execSQL("DELETE FROM Inscrit");
+
+        closedb();
+    }
+
 
 
 

@@ -115,4 +115,8 @@ public class MainActivity extends AppCompatActivity {
     private void CloseLoginDialog(){
         dialog.dismiss();
     }
+
+    public void REST_Clicked(View view) {
+        startActivity(new Intent(this, TestRESTActivity.class));
+    }
 }

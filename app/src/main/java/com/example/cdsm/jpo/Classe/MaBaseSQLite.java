@@ -60,15 +60,6 @@ public class MaBaseSQLite extends SQLiteOpenHelper {
         db.execSQL(createInscrit);
         db.execSQL(createAdmin);
 
-
-        //Insertion de données dans la tables admin
-        String mdp = "ab4f63f9ac65152575886860dde480a1";
-        String mdp2 = "7682fe272099ea26efe39c890b33675b";
-        String mdp3 = "63a9f0ea7bb98050796b649e85481845";
-        db.execSQL("INSERT INTO Admin VALUES (1,'admin','"+mdp+"')");
-        db.execSQL("INSERT INTO Admin VALUES (2,'admin2','"+mdp2+"')");
-        db.execSQL("INSERT INTO Admin VALUES (3,'root','"+mdp3+"')");
-
         //Insertion de données dans la tables NiveauFormation
         db.execSQL("INSERT INTO NiveauFormation VALUES (1,'BAC')");
         db.execSQL("INSERT INTO NiveauFormation VALUES (2,'BAC+2')");
@@ -76,14 +67,13 @@ public class MaBaseSQLite extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO NiveauFormation VALUES (4,'BAC+4')");
         db.execSQL("INSERT INTO NiveauFormation VALUES (5,'BAC+5')");
 
-        //Insertion de données dans la tables Formation
-
+        /*Insertion de données dans la tables Formation
         db.execSQL("INSERT INTO Formation VALUES (1,'BTS1',2)");
         db.execSQL("INSERT INTO Formation VALUES (2,'BTS2',2)");
         db.execSQL("INSERT INTO Formation VALUES (3,'BTS3',2)");
         db.execSQL("INSERT INTO Formation VALUES (4,'BAC1',1)");
         db.execSQL("INSERT INTO Formation VALUES (5,'BAC2',1)");
-        db.execSQL("INSERT INTO Formation VALUES (6,'BAC3',1)");
+        db.execSQL("INSERT INTO Formation VALUES (6,'BAC3',1)");*/
     }
 
     @Override
