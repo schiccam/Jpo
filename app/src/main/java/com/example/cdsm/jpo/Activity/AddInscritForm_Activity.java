@@ -28,6 +28,7 @@ import com.example.cdsm.jpo.Classe.Inscrit;
 import com.example.cdsm.jpo.Classe.InscritDAO;
 import com.example.cdsm.jpo.Classe.MyNumberPicker;
 import com.example.cdsm.jpo.Classe.NiveauFormation;
+import com.example.cdsm.jpo.Classe.WebService;
 import com.example.cdsm.jpo.R;
 
 import java.util.Calendar;
@@ -104,7 +105,8 @@ public class AddInscritForm_Activity extends AppCompatActivity {
                             new DatePickerDialog.OnDateSetListener() {
                                 @Override
                                 public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                                    etDateNaiss.setText(day + "/" + (month + 1) + "/" + year);
+                                    String date = String.format("%02d/%02d/%d", day,(month + 1),year);
+                                    etDateNaiss.setText(date);
                                 }
                             }, y, m, d);
                     //Affichage du DatePicker dans l'UI
@@ -216,9 +218,11 @@ public class AddInscritForm_Activity extends AppCompatActivity {
             inscritDAO.Ajouter(inscrit);
 
             Intent intent = new Intent(this,MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
 
             //TODO envoie de mail
+            new WebService(this).POSTMail(mail,form.getId());
 
         }
     }
@@ -228,8 +232,8 @@ public class AddInscritForm_Activity extends AppCompatActivity {
         etNom.setText("Chiccam");
         etPrenom.setText("Sylvain");
         etTel.setText("0658219313");
-        etMail.setText("schiccam@hotmail.fr");
-        etDateNaiss.setText("27/4/1994");
+        etMail.setText("sylvainchiccam@gmail.com");
+        etDateNaiss.setText("27/04/1994");
         etLieuNaiss.setText("Sevres");
         etAdresse.setText("100 allée du hetre pourpre");
         etVille.setText("Dammarie-les-lys");
@@ -254,21 +258,22 @@ public class AddInscritForm_Activity extends AppCompatActivity {
     //vérification de tous les élément obligatoire du layout
     private int checkDataEntered(){
         int cptValide = 0;
+        String vide = "Champ Ogligatoire";
 
         if (isEmpty(etNom)){
-            etNom.setError("");
+            etNom.setError(vide);
         }
         else
             cptValide++;
 
         if (isEmpty(etPrenom)){
-            etPrenom.setError("");
+            etPrenom.setError(vide);
         }
         else
             cptValide++;
 
         if (isEmpty(etTel)){
-            etTel.setError("");
+            etTel.setError(vide);
         }
         else
             cptValide++;
@@ -280,54 +285,52 @@ public class AddInscritForm_Activity extends AppCompatActivity {
             cptValide++;
 
         if (isEmpty(etDateNaiss)){
-            etDateNaiss.setError("");
+            etDateNaiss.setError(vide);
         }
         else
             cptValide++;
 
         if (isEmpty(etLieuNaiss)){
-            etLieuNaiss.setError("");
+            etLieuNaiss.setError(vide);
         }
         else
             cptValide++;
 
         if (isEmpty(etAdresse)){
-            etAdresse.setError("");
+            etAdresse.setError(vide);
         }
         else
             cptValide++;
 
         if (isEmpty(etVille)){
-            etVille.setError("");
+            etVille.setError(vide);
         }
         else
             cptValide++;
 
         if (isEmpty(etCp)){
-            etCp.setError("");
+            etCp.setError(vide);
         }
         else
             cptValide++;
 
         if (isEmpty(etAnneeSco1)){
-            etCp.setError("");
+            etCp.setError(vide);
         }
         else
             cptValide++;
 
         if (isEmpty(etLibSco1)){
-            etCp.setError("");
+            etCp.setError(vide);
         }
         else
             cptValide++;
 
         if (isEmpty(etEtabSco1)){
-            etCp.setError("");
+            etCp.setError(vide);
         }
         else
             cptValide++;
-
-
 
         return cptValide;
     }

@@ -32,12 +32,13 @@ public class FormationDAO implements DAO<Formation> {
     public void Ajouter(Formation item) {
 
         String lib;
-        int nvFormID;
+        int nvFormID, formID;
 
+        formID = item.getId();
         lib = item.getLib();
         nvFormID = item.getNvformationid();
 
-        String query = "INSERT INTO Formation(formLib, formNiveau) VALUES ('"+lib+"',"+nvFormID+");";
+        String query = "INSERT INTO Formation(form_id, formLib, formNiveau) VALUES ("+formID+",'"+lib+"',"+nvFormID+");";
 
         opendb();
 

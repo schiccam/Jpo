@@ -10,8 +10,13 @@ import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.koushikdutta.ion.Response;
 
+import org.json.JSONObject;
+
+import java.util.List;
+
 
 public class WebService {
+    //Adresse du WebService
     String WEBSERVICE = "http://192.168.43.80:62205";
     Context context;
 
@@ -19,7 +24,120 @@ public class WebService {
         this.context = context;
     }
 
-    // HTTP POST pour récupérer toutes les formations
+    public void POSTInscrit(List<Inscrit> inscrits){
+        //JsonArray pour le Webservice
+        JsonArray jsonArray = new JsonArray();
+        JsonObject jsonObject;
+        int listSize = inscrits.size();
+        // pour chaque élément de la liste faire un jsonobject
+        for (int i = 0; i<listSize; i++){
+            jsonObject = new JsonObject();
+            jsonObject.addProperty("insNom", inscrits.get(i).getNom());
+            jsonObject.addProperty("insPrenom", inscrits.get(i).getPrenom());
+            jsonObject.addProperty("insTel", inscrits.get(i).getTel());
+            jsonObject.addProperty("insMail", inscrits.get(i).getMail());
+            jsonObject.addProperty("insSexe", inscrits.get(i).getSexe());
+            jsonObject.addProperty("insDateNaiss", inscrits.get(i).getDateNaiss());
+            jsonObject.addProperty("insLieuNaiss", inscrits.get(i).getLieuNaiss());
+            jsonObject.addProperty("insAdresse", inscrits.get(i).getAdresse());
+            jsonObject.addProperty("insCP", inscrits.get(i).getCp());
+            jsonObject.addProperty("insVille", inscrits.get(i).getVille());
+            jsonObject.addProperty("insAnneeSco1", inscrits.get(i).getAnneeSco1());
+            jsonObject.addProperty("insLibSco1", inscrits.get(i).getLibSco1());
+            jsonObject.addProperty("insEtabSco1", inscrits.get(i).getEtabSco1());
+            jsonObject.addProperty("insAnneeSco2", inscrits.get(i).getAnneeSco2());
+            jsonObject.addProperty("insLibSco2", inscrits.get(i).getLibSco2());
+            jsonObject.addProperty("insEtabSco2", inscrits.get(i).getEtabSco2());
+            jsonObject.addProperty("insFormation", inscrits.get(i).getFormation());
+            //ajouter le jsonobject au jsonarray
+            jsonArray.add(jsonObject);
+        }
+
+        Ion.with(context)
+                .load(WEBSERVICE+"/api/inscrit")
+                //Envoie en Json
+                .setJsonArrayBody(jsonArray)
+                .asJsonArray()
+                .withResponse()
+                .setCallback(new FutureCallback<Response<JsonArray>>() {
+                    @Override
+                    public void onCompleted(Exception e, Response<JsonArray> result) {
+                        if (result.getHeaders().code() == 200){
+                            new InscritDAO(context).EmptyTableInscrit();
+                        }
+                        // Sinon Erreur
+                        else{
+                            Toast.makeText(context,"Erreur avec WebService",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    public void POSTMail(String mail, int formation){
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("receveur", mail);
+        jsonObject.addProperty("formation", formation);
+
+        Ion.with(context)
+                .load(WEBSERVICE+"/api/sendgrid")
+                //Envoie en Json
+                .setJsonObjectBody(jsonObject)
+                .asJsonObject()
+                .withResponse()
+                .setCallback(new FutureCallback<Response<JsonObject>>() {
+                    @Override
+                    public void onCompleted(Exception e, Response<JsonObject> result) {
+                        if (result.getHeaders().code() == 200){
+                            Toast.makeText(context,"Mail envoyé",Toast.LENGTH_SHORT).show();
+                        }
+                        // Sinon Erreur
+                        else{
+                            Toast.makeText(context,"Erreur avec WebService",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    public void POSTFormation(List<Formation> formations){
+
+        //JsonArray pour le Webservice
+        JsonArray jsonArray = new JsonArray();
+        JsonObject jsonObject;
+        int listSize = formations.size();
+        // pour chaque élément de la liste faire un jsonobject
+        for (int i = 0; i<listSize; i++){
+            jsonObject = new JsonObject();
+            jsonObject.addProperty("formID", formations.get(i).getId());
+            jsonObject.addProperty("formLib", formations.get(i).getLib());
+            jsonObject.addProperty("formNiveau", formations.get(i).getNvformationid());
+
+            //ajouter le jsonobject au jsonarray
+            jsonArray.add(jsonObject);
+        }
+
+
+        Ion.with(context)
+                .load(WEBSERVICE+"/api/formation")
+                //Envoie en Json
+                .setJsonArrayBody(jsonArray)
+                .asJsonArray()
+                .withResponse()
+                .setCallback(new FutureCallback<Response<JsonArray>>() {
+                    @Override
+                    public void onCompleted(Exception e, Response<JsonArray> result) {
+                        if (result.getHeaders().code() == 200){
+                            Toast.makeText(context,"Formations envoyées",Toast.LENGTH_SHORT).show();
+                        }
+                        // Sinon Erreur
+                        else{
+                            Toast.makeText(context,"Erreur avec WebService",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    // HTTP GET pour récupérer toutes les formations
     public void GETFormation(){
         Ion.with(context)
                 // url du webservice
@@ -42,7 +160,7 @@ public class WebService {
                 });
     }
 
-    // HTTP POST pour récupérer tous les admins
+    // HTTP GET pour récupérer tous les admins
     public void GETAdmin(){
         Ion.with(context)
                 // url du webservice
@@ -82,6 +200,7 @@ public class WebService {
                 jsonFormation = jsonArray.get(i).getAsJsonObject();
                 // Récupération des données du JsonObject et insertion dans un objet Formation
                 formation = new Formation();
+                formation.setId(jsonFormation.get("formID").getAsInt());
                 formation.setLib(jsonFormation.get("formLib").getAsString());
                 formation.setNvformationid(jsonFormation.get("formNiveau").getAsInt());
                 // Insertion de la formation dans la BDD locale

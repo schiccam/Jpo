@@ -32,7 +32,7 @@ public class MaBaseSQLite extends SQLiteOpenHelper {
         +"FOREIGN KEY (insFormation) REFERENCES Formation(form_id));";
 
     private String createFormation ="CREATE TABLE IF NOT EXISTS Formation(" +
-            "form_id INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "form_id INTEGER PRIMARY KEY," +
             "formLib TEXT," +
             "formNiveau INTEGER,"+
             "FOREIGN KEY (formNiveau) REFERENCES Formation(nvform_id));";

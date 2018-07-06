@@ -1,8 +1,13 @@
 package com.example.cdsm.jpo.Activity;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -13,18 +18,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.cdsm.jpo.Classe.Formation;
 import com.example.cdsm.jpo.Classe.FormationDAO;
 import com.example.cdsm.jpo.Classe.Hash;
 import com.example.cdsm.jpo.Classe.Inscrit;
 import com.example.cdsm.jpo.Classe.InscritDAO;
 import com.example.cdsm.jpo.Classe.MaBaseSQLite;
 import com.example.cdsm.jpo.Classe.Stat;
+import com.example.cdsm.jpo.Classe.WebService;
 import com.example.cdsm.jpo.R;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    SharedPreferences pref;
     ConstraintLayout layout;
     SQLiteDatabase db;
     Boolean Testdb;
@@ -34,6 +42,32 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Mise a jour de toutes les formations et admins
+        GetFromWebservice();
+
+        //Contrôle si premier lancement ou non
+        pref = getSharedPreferences("Jpo", MODE_PRIVATE);
+        // si oui récupération des fomrations et des admins depuis le webservice
+        if(pref.getBoolean("firstrun", true)){
+            if (CheckConnection()){
+                pref.edit().putBoolean("firstrun", false).commit();
+            }
+            else
+            {
+                //Affiche un dialog pour obliger l'utilisateur à activer le wifi
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setMessage("Le premier lancement de l'application nécessite\n" +
+                        " une connexion internet")
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+        }
 
         //OnTouch changement de page vers le formulaire d'inscription
         layout = findViewById(R.id.layout);
@@ -48,10 +82,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Test
-        //List stats = new FormationDAO(this).getStat();
-        //List inscrits = new InscritDAO(this).getAllInscrit();
+    }
 
+    private void GetFromWebservice() {
+        WebService ws = new WebService(this);
+        ws.GETAdmin();
+        ws.GETFormation();
+    }
+
+    private boolean CheckConnection(){
+        ConnectivityManager cm = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        return isConnected;
     }
 
     public void admin_Click(View view) {

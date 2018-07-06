@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.cdsm.jpo">
+    
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -18,11 +21,13 @@
         </activity>
         <activity
             android:name=".Activity.AddInscritForm_Activity"
-            android:noHistory="true" />
+            android:noHistory="true"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".Activity.AdminActivity" />
         <activity
             android:name=".Activity.UpdateInscritForm_Activity"
-            android:noHistory="true" />
+            android:noHistory="true"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".Activity.TestRESTActivity"></activity>
     </application>
 

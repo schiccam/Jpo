@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import com.example.cdsm.jpo.Activity.AdminActivity;
 import com.example.cdsm.jpo.Activity.UpdateInscritForm_Activity;
 import com.example.cdsm.jpo.R;
 import java.util.ArrayList;
@@ -23,10 +24,12 @@ public class MyListViewAdapterInscrit extends BaseAdapter implements ListAdapter
 
     private List<Inscrit> list;
     private Context context;
+    private AdminActivity parentActivity;
 
-    public MyListViewAdapterInscrit(List<Inscrit> list, Context context){
+    public MyListViewAdapterInscrit(List<Inscrit> list, Context context, AdminActivity adminActivity){
         this.list = list;
         this.context = context;
+        this.parentActivity = adminActivity;
     }
 
     @Override
@@ -45,7 +48,7 @@ public class MyListViewAdapterInscrit extends BaseAdapter implements ListAdapter
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, final ViewGroup parent) {
         View view = convertView;
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -88,6 +91,8 @@ public class MyListViewAdapterInscrit extends BaseAdapter implements ListAdapter
                                 inscritDAO.Supprimer(list.get(position).getId());
                                 list.remove(position);
                                 notifyDataSetChanged();
+                                parentActivity.FillStat();
+
                             }
                         })
                         .setNegativeButton("NON",null);
@@ -103,7 +108,9 @@ public class MyListViewAdapterInscrit extends BaseAdapter implements ListAdapter
                 //Intent vers le formulaire de modification
                 Intent intent = new Intent(context, UpdateInscritForm_Activity.class);
                 intent.putExtra("inscritID",list.get(position).getId());
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 context.startActivity(intent);
+
 
             }
         });

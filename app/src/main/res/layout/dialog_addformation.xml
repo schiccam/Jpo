@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:padding="10dp">
 
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
@@ -17,11 +18,21 @@
         android:textColor="@color/colorAccent"/>
 
     <EditText
+        android:id="@+id/etIDForm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="ID"
+        android:inputType="number"
+        android:layout_marginTop="10dp"
+        android:textSize="30sp"/>
+
+    <EditText
         android:id="@+id/etLibForm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Login"
+        android:hint="Libellè Formation"
         android:inputType="textPersonName"
         android:layout_marginTop="10dp"
         android:textSize="30sp"/>

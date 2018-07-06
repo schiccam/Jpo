@@ -21,4 +21,18 @@
         android:layout_height="wrap_content"
         android:text="GET Admin"
         android:onClick="GetAdmin_Click"/>
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="POST Inscrit"
+        android:onClick="PostInscrit_Click"/>
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="POST Formation"
+        android:onClick="PostFormation_Click"/>
 </LinearLayout>

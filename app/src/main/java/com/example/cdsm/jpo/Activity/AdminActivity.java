@@ -47,12 +47,16 @@ public class AdminActivity extends AppCompatActivity {
         List<Inscrit> inscrits;
         InscritDAO inscritDAO = new InscritDAO(this);
         inscrits = inscritDAO.getAllInscrit();
-        MyListViewAdapterInscrit adapterInscrit = new MyListViewAdapterInscrit(inscrits,this);
+        MyListViewAdapterInscrit adapterInscrit = new MyListViewAdapterInscrit(inscrits,this, this);
 
         lvInscrit = findViewById(R.id.lvInscrit);
         lvInscrit.setAdapter(adapterInscrit);
 
         //Création de l'adapter pour les stats
+        FillStat();
+    }
+
+    public void FillStat(){
         List<Stat> stats = new FormationDAO(this).getStat();
         ListView lvStat = findViewById(R.id.lvStat);
         lvStat.setAdapter(new MyListViewAdapterStat(stats, this));
@@ -63,6 +67,7 @@ public class AdminActivity extends AppCompatActivity {
         //Custom Dialog pour ajout de formation
         AlertDialog.Builder myBuilder = new AlertDialog.Builder(this);
         View myView = getLayoutInflater().inflate(R.layout.dialog_addformation, null);
+        final EditText etIDForm = myView.findViewById(R.id.etIDForm);
         final EditText etLibForm = myView.findViewById(R.id.etLibForm);
         final Spinner spNvFormation = myView.findViewById(R.id.spNvFormation);
         spNvFormation.setAdapter(getNvFormations());
@@ -73,16 +78,16 @@ public class AdminActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //Récuperation du libellé
+                //Récuperation du libellé et de l'id
                 Formation formation = new Formation();
+                formation.setId(Integer.parseInt(etIDForm.getText().toString()));
                 formation.setLib(etLibForm.getText().toString());
                 //Récupération de l'id du niveau de la formation
                 NiveauFormation nvform = (NiveauFormation) spNvFormation.getSelectedItem();
                 formation.setNvformationid(nvform.getId());
                 //Ajout de la formation dans la base de données
                 new FormationDAO(AdminActivity.this).Ajouter(formation);
-                CloseLoginDialog();
-
+                CloseFormDialog();
             }
         });
 
@@ -114,7 +119,7 @@ public class AdminActivity extends AppCompatActivity {
         return adapter;
     }
 
-    private void CloseLoginDialog(){
+    private void CloseFormDialog(){
         dialog.dismiss();
     }
 
