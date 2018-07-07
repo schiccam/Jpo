@@ -71,6 +71,19 @@
             android:layout_weight="1">
 
             <Button
+                android:id="@+id/btnStat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Stat"
+                android:onClick="btnStat_Clicked"
+                android:textSize="30sp"
+                android:background="@color/colorAccent"
+                android:textColor="@android:color/white"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:layout_margin="20dp"/>
+
+            <Button
                 android:id="@+id/btnForm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

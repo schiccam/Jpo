@@ -60,8 +60,8 @@ public class MyListViewAdapterStat extends BaseAdapter implements ListAdapter {
 
         //Affichage du nombre d'inscrit par formation
         int i = list.get(position).getNbInsParForm();
-        if(i == 0){
-            tvNb.setText("Aucun inscrit");
+        if(i == 1){
+            tvNb.setText(i+" inscrit");
         }
         else{
             tvNb.setText(i+" inscrits");

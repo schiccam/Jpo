@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,7 @@ import com.example.cdsm.jpo.Classe.Stat;
 import com.example.cdsm.jpo.Classe.WebService;
 import com.example.cdsm.jpo.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -42,8 +44,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Mise a jour de toutes les formations et admins
-        GetFromWebservice();
 
         //Contrôle si premier lancement ou non
         pref = getSharedPreferences("Jpo", MODE_PRIVATE);
@@ -68,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
                 alert.show();
             }
         }
+        // Au lancement de l'application chargement des données depuis le webservice
+        GetFromWebservice();
 
         //OnTouch changement de page vers le formulaire d'inscription
         layout = findViewById(R.id.layout);
@@ -81,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
     private void GetFromWebservice() {

@@ -1,8 +1,13 @@
 package com.example.cdsm.jpo.Activity;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -28,6 +33,7 @@ import com.example.cdsm.jpo.Classe.MyListViewAdapterInscrit;
 import com.example.cdsm.jpo.Classe.MyListViewAdapterStat;
 import com.example.cdsm.jpo.Classe.NiveauFormation;
 import com.example.cdsm.jpo.Classe.Stat;
+import com.example.cdsm.jpo.Classe.WebService;
 import com.example.cdsm.jpo.R;
 
 import java.util.ArrayList;
@@ -36,6 +42,7 @@ import java.util.List;
 public class AdminActivity extends AppCompatActivity {
 
     ListView lvInscrit;
+    ListView lvStat;
     AlertDialog dialog;
 
     @Override
@@ -43,22 +50,23 @@ public class AdminActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
-        //Création de l'adapter avec la liste de tous les inscrits
-        List<Inscrit> inscrits;
-        InscritDAO inscritDAO = new InscritDAO(this);
-        inscrits = inscritDAO.getAllInscrit();
-        MyListViewAdapterInscrit adapterInscrit = new MyListViewAdapterInscrit(inscrits,this, this);
-
+        lvStat = findViewById(R.id.lvStat);
         lvInscrit = findViewById(R.id.lvInscrit);
-        lvInscrit.setAdapter(adapterInscrit);
 
+
+        //Création de l'adapter avec la liste de tous les inscrits
+        FillLocalInscrit();
         //Création de l'adapter pour les stats
-        FillStat();
+        FillLocalStat();
     }
 
-    public void FillStat(){
+    private void FillLocalInscrit() {
+        List<Inscrit> inscrits = new InscritDAO(this).getAllInscrit();
+        lvInscrit.setAdapter(new MyListViewAdapterInscrit(inscrits, this, this));
+    }
+
+    public void FillLocalStat(){
         List<Stat> stats = new FormationDAO(this).getStat();
-        ListView lvStat = findViewById(R.id.lvStat);
         lvStat.setAdapter(new MyListViewAdapterStat(stats, this));
     }
 
@@ -96,6 +104,43 @@ public class AdminActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    public void btnSync_Clicked(View view) {
+
+        WebService webService = new WebService(this);
+        webService.POSTInscrit(new InscritDAO(this).getAllInscrit());
+        webService.POSTFormation(new FormationDAO(this).getAllFormation());
+
+        //Handler pour vider les listview
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                //Mise à jour des listview
+                FillLocalInscrit();
+                FillLocalStat();
+            }
+        }, 1000);
+    }
+
+    public void btnStat_Clicked(View view) {
+        if(CheckConnection()){
+            Intent intent = new Intent(this,WebServiceStatActivity.class);
+            startActivity(intent);
+        }
+        else{
+            //Affiche un dialog pour obliger l'utilisateur à activer le wifi
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("une connexion internet est requise\n" +
+                    " pour avoir accès à cette page.")
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
+    }
+
     //Récupere dans une liste tout les niveaux de formation depuis la BDD
     private ArrayAdapter getNvFormations(){
         FormationDAO formationDAO = new FormationDAO(this);
@@ -123,7 +168,14 @@ public class AdminActivity extends AppCompatActivity {
         dialog.dismiss();
     }
 
-    public void btnSync_Clicked(View view) {
-        //TODO Synchro avec le web service
+    private boolean CheckConnection(){
+        //vérification de la connexion
+        ConnectivityManager cm = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        return isConnected;
     }
+
+
 }

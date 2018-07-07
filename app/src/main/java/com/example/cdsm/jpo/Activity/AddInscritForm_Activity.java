@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -36,6 +38,7 @@ import java.util.List;
 
 public class AddInscritForm_Activity extends AppCompatActivity {
 
+    //Déclaration des variables
     EditText etNom;
     EditText etPrenom;
     EditText etTel;
@@ -55,6 +58,8 @@ public class AddInscritForm_Activity extends AppCompatActivity {
     Spinner spNvFormation;
     Spinner spLibFormation;
     Button btnValider;
+
+    android.support.v7.app.AlertDialog dialog;
 
 
 
@@ -80,37 +85,8 @@ public class AddInscritForm_Activity extends AppCompatActivity {
             public void onFocusChange(View v, boolean hasFocus) {
                 //Si edittext focus
                 if(hasFocus){
-                    int y, m, d;
-                    // si edittext est vide date par defaut
-                    if(etDateNaiss.getText().toString() == ""){
-                        y = 2000;
-                        m = 5;
-                        d = 15;
-                    }
-                    // sinon date defaut = valeur edittext
-                    else{
-                        String date = etDateNaiss.getText().toString();
-                        String[] parts = date.split("/");
-                        d = Integer.parseInt(parts[0]);
-                        m = Integer.parseInt(parts[1]) - 1;
-                        y = Integer.parseInt(parts[2]);
-                    }
-                    // Cacher le clavier
-                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
-                            InputMethodManager.HIDE_NOT_ALWAYS);
-                    // Cration du DatePicker
-                    Calendar calendar = Calendar.getInstance();
-                    DatePickerDialog datePickerDialog = new DatePickerDialog(AddInscritForm_Activity.this, AlertDialog.THEME_HOLO_LIGHT,
-                            new DatePickerDialog.OnDateSetListener() {
-                                @Override
-                                public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                                    String date = String.format("%02d/%02d/%d", day,(month + 1),year);
-                                    etDateNaiss.setText(date);
-                                }
-                            }, y, m, d);
-                    //Affichage du DatePicker dans l'UI
-                    datePickerDialog.show();
+                    // Affichage du datepicker
+                    ShowDatePicker();
                 }
             }
         });
@@ -162,6 +138,13 @@ public class AddInscritForm_Activity extends AppCompatActivity {
 
                 //Adapter avec Custom spinner pour modifier la taille du texte + données de la BDD
                 spLibFormation.setAdapter(getLibFormations(nv));
+
+                TextView tvTitre = findViewById(R.id.tvTitre);
+
+                tvTitre.setFocusableInTouchMode(true);
+
+                tvTitre.requestFocusFromTouch();
+
             }
 
             @Override
@@ -177,8 +160,42 @@ public class AddInscritForm_Activity extends AppCompatActivity {
             }
         });
 
-        //a mettre en commentaire pour la présentation
+        //à mettre en commentaire pour la présentation
         FillForTest();
+    }
+
+    private void ShowDatePicker() {
+        int y, m, d;
+        // si edittext est vide date par defaut
+        if((etDateNaiss.getText().toString()).matches("")){
+            y = 2000;
+            m = 5;
+            d = 15;
+        }
+        // sinon date defaut = valeur edittext
+        else{
+            String date = etDateNaiss.getText().toString();
+            String[] parts = date.split("/");
+            d = Integer.parseInt(parts[0]);
+            m = Integer.parseInt(parts[1]) - 1;
+            y = Integer.parseInt(parts[2]);
+        }
+        // Cacher le clavier
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                InputMethodManager.HIDE_NOT_ALWAYS);
+        // Cration du DatePicker
+        Calendar calendar = Calendar.getInstance();
+        DatePickerDialog datePickerDialog = new DatePickerDialog(AddInscritForm_Activity.this, AlertDialog.THEME_HOLO_LIGHT,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                        String date = String.format("%02d/%02d/%d", day,(month + 1),year);
+                        etDateNaiss.setText(date);
+                    }
+                }, y, m, d);
+        //Affichage du DatePicker dans l'UI
+        datePickerDialog.show();
     }
 
     private void ValiderIsClicked() {
@@ -387,7 +404,7 @@ public class AddInscritForm_Activity extends AppCompatActivity {
     public void ChooseYear(final EditText editText) {
 
         //Custom Dialog pour formulaire de connexion Admin
-        android.support.v7.app.AlertDialog.Builder myBuilder = new android.support.v7.app.AlertDialog.Builder(this);
+        final android.support.v7.app.AlertDialog.Builder myBuilder = new android.support.v7.app.AlertDialog.Builder(this);
         View myView = getLayoutInflater().inflate(R.layout.dialog_year, null);
         final MyNumberPicker npYear = myView.findViewById(R.id.npYear);
         Button valider = myView.findViewById(R.id.btnValider);
@@ -396,11 +413,12 @@ public class AddInscritForm_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                editText.setText(Integer.toString(npYear.getValue()));
+               dialog.dismiss();
             }
         });
 
         myBuilder.setView(myView);
-        android.support.v7.app.AlertDialog dialog = myBuilder.create();
+        dialog = myBuilder.create();
         dialog.show();
 
     }

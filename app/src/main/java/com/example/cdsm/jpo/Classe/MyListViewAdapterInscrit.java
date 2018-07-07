@@ -91,7 +91,7 @@ public class MyListViewAdapterInscrit extends BaseAdapter implements ListAdapter
                                 inscritDAO.Supprimer(list.get(position).getId());
                                 list.remove(position);
                                 notifyDataSetChanged();
-                                parentActivity.FillStat();
+                                parentActivity.FillLocalStat();
 
                             }
                         })
