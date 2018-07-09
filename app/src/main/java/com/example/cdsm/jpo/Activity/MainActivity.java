@@ -83,6 +83,17 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        /*
+        InscritDAO inscritDAO = new InscritDAO(this);
+        Inscrit inscrit = new Inscrit();
+        inscrit.setNom("chiccam");
+        inscrit.setPrenom("sylvain");
+        inscrit.setFormation(21);
+        for(int i = 0; i<1000; i++){
+            inscritDAO.Ajouter(inscrit);
+        }*/
+
     }
 
     private void GetFromWebservice() {

@@ -180,8 +180,8 @@ public class UpdateInscritForm_Activity extends AppCompatActivity {
     }
 
     private void ValiderIsClicked() {
-        //Si les 12 champs obligatoires ne sont pas vide
-        if (checkDataEntered() == 12){
+        //Si les 15 champs obligatoires ne sont pas vide
+        if (checkDataEntered() == 15){
 
             String nom, prenom, tel, mail, sexe, datenaiss, lieunaiss,
                     adresse, ville, cp, anneesco1, libsco1, etabsco1,
@@ -282,24 +282,45 @@ public class UpdateInscritForm_Activity extends AppCompatActivity {
         return (!TextUtils.isEmpty(email)&& Patterns.EMAIL_ADDRESS.matcher(email).matches());
     }
 
+    private boolean isTelInvalide(EditText et){
+        CharSequence tel = et.getText().toString();
+        if(tel.length() == 10){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    private boolean isCPInvalide(EditText et){
+        CharSequence tel = et.getText().toString();
+        if(tel.length() == 5){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
     //vérification de tous les élément obligatoire du layout
     private int checkDataEntered(){
         int cptValide = 0;
+        String vide = "Champ Ogligatoire";
 
         if (isEmpty(etNom)){
-            etNom.setError("");
+            etNom.setError(vide);
         }
         else
             cptValide++;
 
         if (isEmpty(etPrenom)){
-            etPrenom.setError("");
+            etPrenom.setError(vide);
         }
         else
             cptValide++;
 
-        if (isEmpty(etTel)){
-            etTel.setError("");
+        if (isTelInvalide(etTel)){
+            etTel.setError("Invalide");
         }
         else
             cptValide++;
@@ -311,54 +332,70 @@ public class UpdateInscritForm_Activity extends AppCompatActivity {
             cptValide++;
 
         if (isEmpty(etDateNaiss)){
-            etDateNaiss.setError("");
+            etDateNaiss.setError(vide);
         }
         else
             cptValide++;
 
         if (isEmpty(etLieuNaiss)){
-            etLieuNaiss.setError("");
+            etLieuNaiss.setError(vide);
         }
         else
             cptValide++;
 
         if (isEmpty(etAdresse)){
-            etAdresse.setError("");
+            etAdresse.setError(vide);
         }
         else
             cptValide++;
 
         if (isEmpty(etVille)){
-            etVille.setError("");
+            etVille.setError(vide);
         }
         else
             cptValide++;
 
-        if (isEmpty(etCp)){
-            etCp.setError("");
+        if (isCPInvalide(etCp)){
+            etCp.setError("Invalide");
         }
         else
             cptValide++;
 
         if (isEmpty(etAnneeSco1)){
-            etCp.setError("");
+            etAnneeSco1.setError(vide);
         }
         else
             cptValide++;
 
         if (isEmpty(etLibSco1)){
-            etCp.setError("");
+            etLibSco1.setError(vide);
         }
         else
             cptValide++;
 
         if (isEmpty(etEtabSco1)){
-            etCp.setError("");
+            etEtabSco1.setError(vide);
         }
         else
             cptValide++;
 
+        if (isEmpty(etAnneeSco2)){
+            etAnneeSco2.setError(vide);
+        }
+        else
+            cptValide++;
 
+        if (isEmpty(etLibSco2)){
+            etLibSco2.setError(vide);
+        }
+        else
+            cptValide++;
+
+        if (isEmpty(etEtabSco2)){
+            etEtabSco2.setError(vide);
+        }
+        else
+            cptValide++;
 
         return cptValide;
     }

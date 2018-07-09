@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
+import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cdsm.jpo.Classe.Formation;
 import com.example.cdsm.jpo.Classe.FormationDAO;
@@ -199,8 +201,8 @@ public class AddInscritForm_Activity extends AppCompatActivity {
     }
 
     private void ValiderIsClicked() {
-        //Si les 12 champs obligatoires ne sont pas vide
-        if (checkDataEntered() == 12){
+        //Si les 15 champs obligatoires ne sont pas vide
+        if (checkDataEntered() == 15){
 
             String nom, prenom, tel, mail, sexe, datenaiss, lieunaiss,
                     adresse, ville, cp, anneesco1, libsco1, etabsco1,
@@ -238,7 +240,7 @@ public class AddInscritForm_Activity extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
 
-            //TODO envoie de mail
+
             new WebService(this).POSTMail(mail,form.getId());
 
         }
@@ -255,9 +257,12 @@ public class AddInscritForm_Activity extends AppCompatActivity {
         etAdresse.setText("100 allée du hetre pourpre");
         etVille.setText("Dammarie-les-lys");
         etCp.setText("77190");
-        etAnneeSco1.setText("2012");
-        etLibSco1.setText("BAC PRO EDPI");
-        etEtabSco1.setText("Lycée Joliot Curie Dammarie-les-lys");
+        etAnneeSco1.setText("2017");
+        etLibSco1.setText("BTS SIO SLAM");
+        etEtabSco1.setText("FDME Massy");
+        etAnneeSco2.setText("2012");
+        etLibSco2.setText("BAC PRO EDPI");
+        etEtabSco2.setText("Lycée Joliot Curie Dammarie-les-lys");
     }
 
     // vérification si Edittext est vide
@@ -270,6 +275,26 @@ public class AddInscritForm_Activity extends AppCompatActivity {
     private boolean isEmailValide(EditText et){
         CharSequence email = et.getText().toString();
         return (!TextUtils.isEmpty(email)&& Patterns.EMAIL_ADDRESS.matcher(email).matches());
+    }
+
+    private boolean isTelInvalide(EditText et){
+        CharSequence tel = et.getText().toString();
+        if(tel.length() == 10){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    private boolean isCPInvalide(EditText et){
+        CharSequence tel = et.getText().toString();
+        if(tel.length() == 5){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 
     //vérification de tous les élément obligatoire du layout
@@ -289,8 +314,8 @@ public class AddInscritForm_Activity extends AppCompatActivity {
         else
             cptValide++;
 
-        if (isEmpty(etTel)){
-            etTel.setError(vide);
+        if (isTelInvalide(etTel)){
+            etTel.setError("Invalide");
         }
         else
             cptValide++;
@@ -325,26 +350,44 @@ public class AddInscritForm_Activity extends AppCompatActivity {
         else
             cptValide++;
 
-        if (isEmpty(etCp)){
-            etCp.setError(vide);
+        if (isCPInvalide(etCp)){
+            etCp.setError("Invalide");
         }
         else
             cptValide++;
 
         if (isEmpty(etAnneeSco1)){
-            etCp.setError(vide);
+            etAnneeSco1.setError(vide);
         }
         else
             cptValide++;
 
         if (isEmpty(etLibSco1)){
-            etCp.setError(vide);
+            etLibSco1.setError(vide);
         }
         else
             cptValide++;
 
         if (isEmpty(etEtabSco1)){
-            etCp.setError(vide);
+            etEtabSco1.setError(vide);
+        }
+        else
+            cptValide++;
+
+        if (isEmpty(etAnneeSco2)){
+            etAnneeSco2.setError(vide);
+        }
+        else
+            cptValide++;
+
+        if (isEmpty(etLibSco2)){
+            etLibSco2.setError(vide);
+        }
+        else
+            cptValide++;
+
+        if (isEmpty(etEtabSco2)){
+            etEtabSco2.setError(vide);
         }
         else
             cptValide++;
@@ -423,5 +466,25 @@ public class AddInscritForm_Activity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("spLibFormation",spLibFormation.getSelectedItemPosition());
+    }
 
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        //Récupération de la position du spinner spLibFormation avant la rotation
+        final int position = savedInstanceState.getInt("spLibFormation");
+        //Handler pour afficher la bonne valeur aprés la rotation
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                //Mise à jour des listview
+                spLibFormation.setSelection(position);
+            }
+        }, 200);
+
+    }
 }

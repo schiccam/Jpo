@@ -55,7 +55,8 @@
         android:textSize="30sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:onClick="REST_Clicked"/>
+        android:onClick="REST_Clicked"
+        android:visibility="gone"/>
 
 
 

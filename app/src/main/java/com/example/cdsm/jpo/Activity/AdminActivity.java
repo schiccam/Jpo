@@ -13,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -86,16 +87,38 @@ public class AdminActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //Récuperation du libellé et de l'id
-                Formation formation = new Formation();
-                formation.setId(Integer.parseInt(etIDForm.getText().toString()));
-                formation.setLib(etLibForm.getText().toString());
-                //Récupération de l'id du niveau de la formation
-                NiveauFormation nvform = (NiveauFormation) spNvFormation.getSelectedItem();
-                formation.setNvformationid(nvform.getId());
-                //Ajout de la formation dans la base de données
-                new FormationDAO(AdminActivity.this).Ajouter(formation);
-                CloseFormDialog();
+                //Récupération des ID des formations de la bdd
+                List<Integer> ids = new FormationDAO(AdminActivity.this).getAllFormationID();
+
+                if(!(isEmpty(etIDForm)) && !(isEmpty(etLibForm))){
+                    //Si ID n'existe pas dans la bdd alors ajout de la formation dans la bdd
+                    if(!(ids.contains(Integer.parseInt(etIDForm.getText().toString()))))
+                    {
+                        //Récuperation du libellé et de l'id
+                        Formation formation = new Formation();
+                        formation.setId(Integer.parseInt(etIDForm.getText().toString()));
+                        formation.setLib(etLibForm.getText().toString());
+                        //Récupération de l'id du niveau de la formation
+                        NiveauFormation nvform = (NiveauFormation) spNvFormation.getSelectedItem();
+                        formation.setNvformationid(nvform.getId());
+                        //Ajout de la formation dans les bases de données
+                        FormationDAO formationDAO = new FormationDAO(AdminActivity.this);
+                        formationDAO.Ajouter(formation);
+                        new WebService(AdminActivity.this).POSTFormation(formationDAO.getAllFormation());
+                        CloseFormDialog();
+                    }
+                    else{
+                        etIDForm.setError("Existe déjà");
+                    }
+                }
+                else{
+                    if(isEmpty(etIDForm)){
+                        etIDForm.setError("Champ Obligatoire");
+                    }
+                    if(isEmpty(etLibForm)){
+                        etLibForm.setError("Champ Obligatoire");
+                    }
+                }
             }
         });
 
@@ -116,8 +139,9 @@ public class AdminActivity extends AppCompatActivity {
                 //Mise à jour des listview
                 FillLocalInscrit();
                 FillLocalStat();
+                Toast.makeText(AdminActivity.this,"Synchronisation fini!",Toast.LENGTH_SHORT).show();
             }
-        }, 1000);
+        }, 2000);
     }
 
     public void btnStat_Clicked(View view) {
@@ -175,6 +199,11 @@ public class AdminActivity extends AppCompatActivity {
         boolean isConnected = activeNetwork != null &&
                 activeNetwork.isConnectedOrConnecting();
         return isConnected;
+    }
+
+    private boolean isEmpty(EditText et){
+        CharSequence str = et.getText().toString();
+        return TextUtils.isEmpty(str);
     }
 
 

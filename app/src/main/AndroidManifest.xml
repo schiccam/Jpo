@@ -29,7 +29,7 @@
             android:noHistory="true"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".Activity.TestRESTActivity" />
-        <activity android:name=".Activity.WebServiceStatActivity"></activity>
+        <activity android:name=".Activity.WebServiceStatActivity" />
     </application>
 
 </manifest>

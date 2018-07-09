@@ -40,7 +40,7 @@ public class WebServiceStatActivity extends AppCompatActivity {
 
         Ion.with(this)
                 // url du webservice
-                .load("http://192.168.0.101:62205/api/inscrit")
+                .load("http://192.168.43.80:62205/api/inscrit")
                 // retour en Json
                 .asJsonArray()
                 .withResponse()

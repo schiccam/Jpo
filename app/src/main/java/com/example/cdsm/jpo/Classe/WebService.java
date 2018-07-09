@@ -25,7 +25,7 @@ import java.util.List;
 
 public class WebService {
     //Adresse du WebService
-    String WEBSERVICE = "http://192.168.0.101:62205";
+    String WEBSERVICE = "http://192.168.43.80:62205";
     Context context;
 
     public WebService(Context context){

@@ -103,6 +103,24 @@ public class FormationDAO implements DAO<Formation> {
         return formations;
     }
 
+    public List<Integer> getAllFormationID(){
+        List<Integer> IDs = new ArrayList<>();
+
+        opendb();
+
+        Cursor cr = db.rawQuery("SELECT form_id FROM Formation;",null);
+
+        if(cr.moveToFirst()){
+            do{
+                IDs.add(cr.getInt(cr.getColumnIndex("form_id")));
+            }
+            while (cr.moveToNext());
+            cr.close();
+        }
+        closedb();
+        return IDs;
+    }
+
     public List getAllFormation(){
 
         String lib;
